@@ -1,6 +1,6 @@
 # TestJeuxPublic
-Public version of testjeux
-Hello this is a test project for a video game created from scratch with WPF. Here is more of a framework of the game and an editor.
+Public version
+This is a test project for a video game created from scratch with WPF. Here is more of a framework of the game and an editor.
 This is a copy of a private version that implements a bit more, I especially removed some models assets that.
 
 Initially I just wanted to mess around with an architecture similar to what I have at work but where the legacy code is really heavy to refactor.
