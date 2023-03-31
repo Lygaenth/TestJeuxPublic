@@ -1,0 +1,46 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Prism.Core" Version="8.1.97" />
+    <PackageReference Include="SharpDX.XInput" Version="4.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TestJeux.API\TestJeux.API.csproj" />
+    <ProjectReference Include="..\TestJeux.Business\TestJeux.Business.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="CustomUc\AnimatedDisplay.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="CustomUc\ChatBox.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="CustomUc\ItemDisplay.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="CustomUc\AnimatedDisplay.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="CustomUc\ChatBox.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="CustomUc\ItemDisplay.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+
+</Project>

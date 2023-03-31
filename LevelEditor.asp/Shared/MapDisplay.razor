@@ -1,0 +1,77 @@
+﻿@using LevelEditor.asp.Models;
+@using LevelEditor.asp;
+@using TestJeux.Business.Managers;
+
+@inject ImageManager _imageService;
+
+<div style="position: relative; display: flex;">
+	<table class="compact">		
+		@for (int i = 0; i < 16; i++)
+		{
+			<tr>
+			@for (int j = 0; j < 16; j++)
+			{
+				var row = j;
+				var col = i;
+				if (Tiles!= null)
+				{
+					<td class="@GetCellClass(Tiles[j][i])">
+						<img style="@GetRotateClass(@Tiles[j][i].Angle)" src="@Tiles[j][i].Image" @onclick="@(e => Select(@Tiles[row][col]))"/>
+					</td>
+				}
+			}
+			</tr>
+		}		
+	</table>
+	@foreach(var decoration in Decorations)
+	{
+		<img style="@GetImgPosition(decoration.X, decoration.Y)" src="@decoration.Image" />
+	}
+</div>
+
+@code {
+
+	[Parameter]
+	public TileModel[][]? Tiles { get; set; }
+
+	[Parameter]
+	public EventCallback<TileModel> OnSelectedTile { get; set; }
+
+	[Parameter]
+	public TileModel? SelectedTile { get; set; }
+
+	[Parameter]
+	public List<DecorationModel> Decorations { get; set; }
+
+
+	public MapDisplay()
+	{
+		Decorations = new List<DecorationModel>();
+	}
+
+	private string GetCellClass(TileModel tile)
+	{
+		return tile.IsSelected ? "selectedTd" : "compact";
+	}
+
+	private string GetRotateClass(int angle)
+	{
+		return "transform: rotate(" + angle + "deg)";
+	}
+
+	private string GetImgPosition(int X, int Y)
+	{
+		var style= "position: absolute; top: "+Y+"px; left: "+X+"px;";
+		return style;
+	}
+
+	private async Task Select(TileModel tile)
+	{
+		if (SelectedTile != null)
+			SelectedTile.IsSelected = false;
+
+		SelectedTile = tile;
+		SelectedTile.IsSelected = true;
+		await OnSelectedTile.InvokeAsync(tile);
+	}
+}

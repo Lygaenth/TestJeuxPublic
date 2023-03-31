@@ -1,0 +1,222 @@
+﻿<Window x:Class="LevelEditor.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:LevelEditor"
+        mc:Ignorable="d"
+        xmlns:displays="clr-namespace:TestJeux.Display.CustomUc;assembly=TestJeux.Display"
+        xmlns:converter="clr-namespace:TestJeux.Display.Converter;assembly=TestJeux.Display"
+        Title="MainWindow" Height="900" Width="1200" d:DataContext="{d:DesignInstance local:LevelEditorViewModel}">
+    <Window.Resources>
+        <converter:BoolToVis x:Key="BoolToVis"/>
+    </Window.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Column="0" Grid.Row="1" Background="Black">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Label Grid.Row="0" Content="Level" Foreground="White" Margin="5" FontSize="16" FontWeight="Bold" HorizontalAlignment="Center"/>
+                <ComboBox Grid.Row="1" ItemsSource="{Binding Levels}" SelectedItem="{Binding SelectedLevel}" DisplayMemberPath="ID" Margin="5"/>
+                <Button Grid.Row="2" Content="Refresh" Command="{Binding ReloadCmd}" Margin="5"/>
+                <Button Grid.Row="3" Content="Save" Command="{Binding SaveCurrentLevelCmd}" Margin="5"/>
+                <Border BorderBrush="White" BorderThickness="1"/>
+            </Grid>
+            <Grid Grid.Row="3">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Label Content="Filters :" Foreground="White"  FontSize="16" FontWeight="Bold" HorizontalAlignment="Center"/>
+                <CheckBox Grid.Row="1" Content="Zones" IsChecked="{Binding ShowZones}" Foreground="White" Margin="5" />
+                <CheckBox Grid.Row="2" Content="Decorations" IsChecked="{Binding ShowDecorations}" Foreground="White" Margin="5" />
+                <Border Grid.Row="3" BorderBrush="White" BorderThickness="1"/>
+            </Grid>
+            <Expander Grid.Row="4">
+                <Expander.Header>
+                    <Label Content="Tiles " Foreground="White" FontSize="16" FontWeight="Bold" HorizontalAlignment="Center" />
+                </Expander.Header>
+                <Grid >
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <DockPanel Grid.Row="1">
+                        <Label Content="{Binding SelectedTile.Position}" Foreground="White"/>
+                    </DockPanel>
+                    <DockPanel Grid.Row="2" FlowDirection="LeftToRight">
+                        <Label Content="Angle: " Foreground="White"/>
+                        <ComboBox SelectedItem="{Binding SelectedTile.Angle}" Margin="5,0,5,0" ItemsSource="{Binding Angles}" />
+                    </DockPanel>
+                    <Grid Grid.Row="3">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Image Grid.Column="1" Source="{Binding SelectedTile.Sprite}" Width="50" Margin="5" >
+                            <Image.LayoutTransform>
+                                <RotateTransform CenterX="25" CenterY="25" Angle="{Binding SelectedTile.Angle}"/>
+                            </Image.LayoutTransform>
+                        </Image>
+                    </Grid>
+                    <DockPanel Grid.Row="4">
+                        <Label Content="Tile: " Foreground="White"/>
+                        <ComboBox ItemsSource="{Binding TilesSprites}" SelectedItem="{Binding SelectedSpriteInfo}" DisplayMemberPath="Name" Margin="5"/>
+                    </DockPanel>
+                </Grid>
+            </Expander>
+            <Border Grid.Row="5" BorderBrush="White" BorderThickness="1" />
+            <Grid Grid.Row="6">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <DockPanel Grid.Row="0">
+                    <Label Content="Zones " Foreground="White" FontSize="16" FontWeight="Bold" HorizontalAlignment="Center"/>
+                </DockPanel>
+                <DockPanel Grid.Row="1">
+                    <Label Grid.Column="0" Content="Zone:" Foreground="White"/>
+                    <Label Content="{Binding SelectedZone.Label}" Foreground="White"/>
+                </DockPanel>
+                <DockPanel Grid.Row="2">
+                    <Label Content="Dimensions:" Foreground="White" />
+                    <Label Content="{Binding SelectedZone.Dimensions}" Foreground="White" />
+                </DockPanel>
+                <DockPanel Grid.Row="3">
+                    <Label Content="Groundtype:" Foreground="White"/>
+                    <ComboBox ItemsSource="{Binding GroundTypes}" SelectedItem="{Binding SelectedZone.GroundType}" Margin="5"/>
+                </DockPanel>
+                <Button Grid.Row="4" Content="Add zone" Command="{Binding AddZoneCmd}" Margin="5" />
+                <Button Grid.Row="5" Content="Delete zone" Command="{Binding DeleteZoneCmd}" Margin="5" />
+            </Grid>
+        </Grid>
+        <Grid Grid.Row="1" Grid.Column="1">
+            <Canvas Width="800" Height="800" >
+                <!--<Image x:Name="Background" Source="{Binding SelectedLevel.Map}" Canvas.Top="0" Canvas.Left="0"/>-->
+                <Grid x:Name="BackGround" >
+                    <ItemsControl ItemsSource="{Binding SelectedLevel.Tiles}"  >
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <Canvas />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Canvas>
+                                    <Button Canvas.Left="{Binding X}" Canvas.Top="{Binding Y}" Width="50" Height="50" Command="{Binding DataContext.SelectTileCmd, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" CommandParameter="{Binding .}">
+                                        <Image Source="{Binding Sprite}"  >
+                                            <Image.LayoutTransform>
+                                                <RotateTransform CenterX="25" CenterY="25" Angle="{Binding Angle}"/>
+                                            </Image.LayoutTransform>
+                                        </Image>
+                                    </Button>
+                                </Canvas>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </Grid>
+                <Grid Canvas.Top="0" Canvas.Left="0">
+                    <ItemsControl ItemsSource="{Binding Characters}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <Canvas/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <displays:ItemDisplay />
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </Grid>
+            </Canvas>
+            <Canvas Width="800" Height="800" Visibility="{Binding ShowDecorations, Converter={StaticResource BoolToVis}}" >
+                <!--<Image x:Name="Background" Source="{Binding SelectedLevel.Map}" Canvas.Top="0" Canvas.Left="0"/>-->
+                <Grid x:Name="Decorations" Canvas.Top="0" Canvas.Left="0" >
+                    <ItemsControl ItemsSource="{Binding SelectedLevel.Decorations}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <Canvas/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Canvas>
+                                    <Image Source="{Binding Sprite}"  Canvas.Top="{Binding Y}" Canvas.Left="{Binding X}" />
+                                </Canvas>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </Grid>
+            </Canvas>
+            <!--<Grid x:Name="Weather">
+                <local:ShaderDisplay DataContext="{Binding .}" />
+            </Grid>-->
+            <Canvas  Width="800" Height="800" Visibility="{Binding ShowZones, Converter={StaticResource BoolToVis}}">
+                <Grid Visibility="Visible" Background="Transparent">
+                    <ItemsControl ItemsSource="{Binding DebugZones}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <ContentControl>
+                                    <Canvas>
+                                        <Border BorderBrush="{Binding Color}" BorderThickness="1"  Canvas.Left="{Binding X}" Canvas.Top="{Binding Y}" >
+                                            <Grid>
+                                                <Rectangle Width="{Binding Width}" Height="{Binding Heigth}" Stroke="{Binding Color}" Fill="{Binding Color}" Opacity="0.3" Canvas.Left="{Binding X}" Canvas.Top="{Binding Y}" />
+                                                <TextBlock Width="{Binding Width}" Height="{Binding Heigth}" Text="{Binding Label}" Foreground="{Binding Color}" TextAlignment="Center" TextWrapping="Wrap" />
+                                                <Thumb Width="10" Height="10" DragDelta="Thumb_DragDeltaCenter" Background="Yellow" DragCompleted="Thumb_DragCompleted" MouseUp="Thumb_Click"/>
+                                                <Thumb HorizontalAlignment="Left" Margin="-5,0,0,0" Width="10" Height="10" DragDelta="Thumb_DragDeltaLeft" Background="Yellow" DragCompleted="Thumb_DragCompleted" MouseUp="Thumb_Click"/>
+                                                <Thumb HorizontalAlignment="Right" Margin="0,0,-5,0" Width="10" Height="10" DragDelta="Thumb_DragDeltaRight" Background="Yellow" DragCompleted="Thumb_DragCompleted" MouseUp="Thumb_Click"/>
+                                                <Thumb VerticalAlignment="Top" Margin="0,-5,0,0" Width="10" Height="10" DragDelta="Thumb_DragDeltaTop" Background="Yellow" DragCompleted="Thumb_DragCompleted" MouseUp="Thumb_Click"/>
+                                                <Thumb VerticalAlignment="Bottom" Margin="0,0,0,-5" Width="10" Height="10" DragDelta="Thumb_DragDeltaBottom" Background="Yellow" DragCompleted="Thumb_DragCompleted" MouseUp="Thumb_Click"/>
+                                            </Grid>
+                                        </Border>
+                                        </Canvas>
+                                </ContentControl>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <Canvas />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                    </ItemsControl>
+                </Grid>
+            </Canvas>
+        </Grid>
+    </Grid>
+</Window>

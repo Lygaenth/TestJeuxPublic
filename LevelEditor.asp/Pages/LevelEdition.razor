@@ -1,0 +1,223 @@
+﻿@page "/LevelEdition"
+
+<PageTitle>LevelEdition</PageTitle>
+@using LevelEditor.asp.Data
+@using TestJeux.API.Models;
+@using LevelEditor.asp.Models;
+@using TestJeux.Business.Managers;
+@using TestJeux.SharedKernel.Enums;
+
+@inject LevelService _levelService
+@inject ImageManager _imageService
+
+<div style="float: left;width: 20%">
+	<sidebar>
+	<div>
+		<strong>Level:</strong>
+		<select @onchange="@OnLevelChanged" >
+			@foreach(var level in Levels)
+			{
+				<option>@level</option>
+			}
+		</select>
+	</div>
+	<div>
+		@if(@SelectedLevel != null)
+		{
+			<div>
+				<label><strong>Shader:</strong> @SelectedLevel.Shader </label>
+			</div>
+			<div>
+			<label><strong>Music:</strong> @SelectedLevel.LevelMusic </label>
+			</div>
+			<div style="margin:5px">
+			<img style="@GetRotateClass(@SelectedSprite.Angle); float:left; width: 20%; margin: 5px 5px" src="@SelectedSprite.Image" />
+				<select @bind="@SelectedSprite.GroundType" style="margin:5px" >
+				@foreach (var value in Enum.GetValues(typeof(GroundSprite)))
+				{
+					<option>@value</option>		
+				}
+			</select>
+			<div>
+				<strong style="margin:5px">Angle: </strong>
+					<select @bind="@SelectedSprite.Angle" style="margin:5px">
+					<option>0</option>
+					<option>90</option>
+					<option>180</option>
+					<option>270</option>
+					</select>
+				</div>
+			</div>
+			<div>
+				<label>Display decoration layer</label>
+				<input type="checkbox" @checked="@DisplayDecoration" @onchange="@OnDecorationDisplayChanged" />
+			</div>
+		}
+	</div>
+	</sidebar>
+</div>
+<MapDisplay @ref="Map" Tiles="@Tiles" OnSelectedTile="Select" SelectedTile="SelectedSprite" Decorations="@Decorations" />
+
+<p/>
+@code
+{
+	private MapDisplay Map { get; set; }
+
+	private TileModel _selectedSprite;
+
+	public LevelDto SelectedLevel { get; set; }
+
+	public TileModel SelectedSprite
+	{
+		get => _selectedSprite;
+		set
+		{
+			_selectedSprite = value;
+			UpdateSelectedSpriteImage();
+		}
+	}
+
+	public TileModel[][] Tiles { get; set; }
+
+	public List<DecorationModel> Decorations { get; set; }
+
+	public bool DisplayDecoration { get; set; }
+
+	public LevelEdition()
+	{
+		Levels = new List<int>();
+		Tiles = new TileModel[16][];
+		Decorations = new List<DecorationModel>();
+		for (int i = 0; i < 16; i++)
+			Tiles[i] = new TileModel[16];
+	}
+
+	private List<int> Levels { get; set; }
+
+	private string GetRotateClass(int angle)
+	{
+		return "transform: rotate("+angle+"deg)";
+	}
+
+	protected override void OnInitialized()
+	{
+		var levels =_levelService.GetLevelList().Order().ToList();
+		if (!levels.Any())
+		{
+			var firstLevel = new LevelDto() { ID = 1, DefaultTile = GroundSprite.Grass.GetHashCode() };
+			_levelService.AddLevel(firstLevel);
+			levels.Add(firstLevel.ID);
+		}
+		Levels.AddRange(_levelService.GetLevelList().Order());
+	}
+
+	public List<int> GetAvailableLevels()
+	{
+		return Levels;
+	}
+
+	private void OnLevelChanged(ChangeEventArgs eventArgs)
+	{
+		int levelId;
+		if (eventArgs.Value == null)
+			return;
+
+		if(!Int32.TryParse(eventArgs.Value.ToString(), out levelId))
+			return;
+
+		ReloadLevel(_levelService.GetLevel(levelId));
+	}
+
+	private void OnDecorationDisplayChanged(ChangeEventArgs eventArgs)
+	{
+		if (eventArgs.Value == null || !bool.TryParse(eventArgs.Value.ToString(), out bool value))
+			return;
+
+		if (value)
+			LoadDecorations();
+		else
+			Decorations.Clear();
+	}
+
+	private void UpdateSelectedSpriteImage()
+	{
+		SelectedSprite.Image = _imageService.GetImage(SelectedSprite.GroundType.ToString());
+	}
+
+	private async Task Select(TileModel tile)
+	{
+		SelectedSprite = tile;
+	}
+
+	protected override Task OnInitializedAsync()
+	{
+
+		ReloadLevel(_levelService.GetLevel(1));
+		return base.OnInitializedAsync();
+	}
+
+	private void ReloadLevel(LevelDto level)
+	{
+		SelectedLevel = level;
+		var orderedTiles = GenerateTiles(SelectedLevel.DefaultTile, SelectedLevel.TilesZones);
+		foreach (var tile in orderedTiles)
+		{
+			Tiles[tile.TopLeft.X/50][tile.TopLeft.Y/50] = new TileModel(_imageService) { X = tile.TopLeft.X, Y = tile.TopLeft.Y, Image = _imageService.GetImage(tile.Tile.ToString()), Angle = tile.Angle, GroundType = tile.Tile };
+		}
+		if(DisplayDecoration)
+			LoadDecorations();
+		SelectedSprite = Tiles[0][0];
+
+	}
+
+	private void UdapteDecorations()
+	{
+		if (DisplayDecoration)
+			LoadDecorations();
+		else
+			Decorations.Clear();
+	}
+
+	private void LoadDecorations()
+	{
+		Decorations.Clear();
+		foreach (var decoration in SelectedLevel.Decorations)
+			Decorations.Add(new DecorationModel(decoration, _imageService.GetImage(decoration.Decoration.ToString())));
+	}
+
+	public List<TileZoneDto> GenerateTiles(int defaultTile, List<TileZoneDto> tilesDto)
+	{
+		var tiles = new List<TileZoneDto>();
+
+		for (int j = 0; j < 16; j++)
+		{
+			for (int i = 0; i < 16; i++)
+			{
+				var x = i * 50;
+				var y = j * 50;
+				var tileDto = GetTileForPosition(defaultTile, x, y, tilesDto);
+				var newTile = new TileZoneDto();
+				newTile.Tile = tileDto.Tile;
+				newTile.TopLeft = new System.Drawing.Point(x, y);
+				newTile.BottomRight = new System.Drawing.Point(x + 50, y + 50);
+				newTile.Angle = tileDto.Angle;
+				tiles.Add(newTile);
+			}
+		}
+
+		return tiles;
+	}
+
+	private TileZoneDto GetTileForPosition(int defaultTile, int X, int Y, List<TileZoneDto> zones)
+	{
+		foreach (var zone in zones)
+		{
+			if (X < zone.TopLeft.X || X >= zone.BottomRight.X)
+				continue;
+			if (Y < zone.TopLeft.Y || Y >= zone.BottomRight.Y)
+				continue;
+			return zone;
+		}
+		return new TileZoneDto() { Tile = (GroundSprite)defaultTile };
+	}
+}

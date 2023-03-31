@@ -1,0 +1,27 @@
+﻿<UserControl x:Class="TestJeux.Display.CustomUc.ShaderDisplay"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:TestJeux.Display.CustomUc"
+             xmlns:TS="clr-namespace:TestJeux.Display.TemplateSelector"
+             xmlns:Converters="clr-namespace:TestJeux.Display.Converter"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800" >
+    <UserControl.Resources>
+        <TS:ShaderDataTemplateSelector x:Key="ShaderSelector" />
+        <Converters:ConverterToPath x:Key="PathConverter" />
+        <DataTemplate x:Key="Natural" />
+        <DataTemplate x:Key="Evening">
+            <Grid>
+                <Path Fill="DarkBlue" Opacity="0.3" Data="{Binding Sources, Converter={StaticResource PathConverter}}"  />
+            </Grid>
+        </DataTemplate>
+        <DataTemplate x:Key="Cave">
+            <Grid>
+                <Path Fill="Black" Opacity="0.99" Data="{Binding Sources, Converter={StaticResource PathConverter}}"  />
+            </Grid>
+        </DataTemplate>
+    </UserControl.Resources>
+    <ContentPresenter Content="{Binding Shader}" ContentTemplateSelector="{StaticResource ShaderSelector}" />
+</UserControl>

@@ -1,0 +1,193 @@
+﻿<UserControl x:Class="TestJeux.Display.CustomUc.GameDisplay"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:TestJeux.Display.CustomUc"
+             xmlns:Converter="clr-namespace:TestJeux.Display.Converter"
+             xmlns:Vm="clr-namespace:TestJeux.Display.ViewModels"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800" d:DataContext="{x:Type Vm:GameViewModel}">
+    <UserControl.Resources>
+        <Converter:BoolToVis x:Key="BoolToVis"/>
+        <Style x:Key="MenuButton" TargetType="{x:Type Button}">
+            <Style.Triggers>
+                <Trigger Property="IsFocused" Value="False">
+                    <Setter Property="Background" Value="Gainsboro"/>
+                    <Setter Property="BorderBrush" Value="Blue"/>
+                    <Setter Property="BorderThickness" Value="1"/>
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="Button">
+                                <Border BorderThickness="3" BorderBrush="Blue">
+                                    <Label Content="{TemplateBinding Content}" FontSize="100" Foreground="Blue" HorizontalAlignment="Center" />
+                                </Border>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Trigger>
+                <Trigger Property="IsFocused" Value="True">
+                    <Setter Property="Background" Value="Gainsboro"/>
+                    <Setter Property="BorderBrush" Value="Blue"/>
+                    <Setter Property="BorderThickness" Value="2"/>
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="Button">
+                                <Border BorderThickness="3" BorderBrush="Blue" Background="Gainsboro">
+                                    <Border.Effect>
+                                        <DropShadowEffect Color="Blue" ShadowDepth="2"/>
+                                    </Border.Effect>
+                                    <Label Content="{TemplateBinding Content}" FontSize="100" Foreground="Blue" HorizontalAlignment="Center" >
+                                        <Label.Effect>
+                                            <DropShadowEffect Color="Blue" ShadowDepth="2"/>
+                                        </Label.Effect>
+                                    </Label>
+                                </Border>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="FadeInGrid" TargetType="Grid">
+            <Setter Property="Background" Value="Black"/>
+            <Style.Triggers>
+                <Trigger Property="Visibility" Value="Visible">
+                    <Trigger.EnterActions>
+                        <BeginStoryboard >
+                            <Storyboard>
+                                <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                                                     From="0.0" To="1.0" Duration="0:0:3"/>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </Trigger.EnterActions>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+    <Grid DataContext="{Binding .}" Visibility="{Binding DisplayVm.DisplayGame, Converter={StaticResource BoolToVis}}" Background="Black" Margin="10" >
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="1" Grid.Column="0" >
+            <local:StatsDisplay DataContext="{Binding DisplayVm.LevelVm.SelectedItem.Stats}" />
+        </Grid>
+        <Grid DataContext="{Binding DisplayVm}"  Grid.Row="1" Grid.Column="1">
+            <Canvas DataContext="{Binding LevelVm}"  Width="800" Height="800" >
+                <Grid x:Name="BackGround" Canvas.Top="0" Canvas.Left="0" >
+                    <ItemsControl ItemsSource="{Binding Tiles}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <Canvas/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Canvas>
+                                    <Image Source="{Binding Sprite}"  Canvas.Top="{Binding Y}" Canvas.Left="{Binding X}" Width="50" Height="50" >
+                                        <Image.LayoutTransform>
+                                            <RotateTransform CenterX="25" CenterY="25" Angle="{Binding Angle}"/>
+                                        </Image.LayoutTransform>
+                                    </Image>
+                                </Canvas>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </Grid>
+                <Canvas Width="800" Height="800" >
+                    <Grid x:Name="Decorations" Canvas.Top="0" Canvas.Left="0" >
+                        <ItemsControl ItemsSource="{Binding Decorations}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <Canvas/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Canvas>
+                                        <Image Source="{Binding Sprite}"  Canvas.Top="{Binding Y}" Canvas.Left="{Binding X}" />
+                                    </Canvas>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </Grid>
+                </Canvas>
+                <Grid Canvas.Top="0" Canvas.Left="0">
+                    <ItemsControl ItemsSource="{Binding Items}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <Canvas/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <local:ItemDisplay />
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </Grid>
+            </Canvas>
+            <Grid x:Name="Weather">
+                <local:ShaderDisplay DataContext="{Binding .}" />
+            </Grid>
+            <local:ChatBox DataContext="{Binding DisplayText}" />
+            <Grid Visibility="{Binding IsLost, Converter={StaticResource BoolToVis}}" Style="{StaticResource FadeInGrid}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Label Grid.Row="1" Grid.Column="1" Content="YOU DIED" Foreground="Red" Opacity="1" FontSize="100" />
+            </Grid>
+            <Grid Visibility="{Binding IsWin, Converter={StaticResource BoolToVis}}" Style="{StaticResource FadeInGrid}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Label Grid.Row="1" Grid.Column="1" Content="VICTORY" Foreground="Gold" Opacity="1" FontSize="100" />
+            </Grid>
+            <Canvas  Width="800" Height="800">
+                <Grid Visibility="Hidden" Background="Transparent">
+                    <ItemsControl ItemsSource="{Binding DebugZones}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Canvas>
+                                    <Rectangle Width="{Binding Width}" Height="{Binding Heigth}" Stroke="{Binding Color}" Fill="{Binding Color}" Opacity="0.3" Canvas.Left="{Binding X}" Canvas.Top="{Binding Y}" />
+                                    <Border BorderBrush="{Binding Color}" BorderThickness="1" Canvas.Left="{Binding X}" Canvas.Top="{Binding Y}" >
+                                        <TextBlock Width="{Binding Width}" Height="{Binding Heigth}" Text="{Binding ID}" Foreground="{Binding Color}" TextAlignment="Center" TextWrapping="Wrap" />
+                                    </Border>
+                                </Canvas>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <Canvas />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                    </ItemsControl>
+                </Grid>
+            </Canvas>
+        </Grid>
+        <Grid Grid.Row="1" Grid.Column="2">
+            <local:EquipmentsDisplay DataContext="{Binding EquipmentVm}" />
+        </Grid>
+    </Grid>
+</UserControl>

@@ -1,0 +1,101 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Remove="Pages\MapDisplay.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Shared\MapDisplay.razor" />
+    <None Include="wwwroot\ressource\Sprites\Bush.png" />
+    <None Include="wwwroot\ressource\Sprites\Caisse\Caisse.png" />
+    <None Include="wwwroot\ressource\Sprites\Caisse\SubmergedCaisse.png" />
+    <None Include="wwwroot\ressource\Sprites\Chest\Chest.png" />
+    <None Include="wwwroot\ressource\Sprites\Chest\OpenedChest.png" />
+    <None Include="wwwroot\ressource\Sprites\Decoration\bridge.png" />
+    <None Include="wwwroot\ressource\Sprites\Decoration\Cave.png" />
+    <None Include="wwwroot\ressource\Sprites\Decoration\CaveEntry.png" />
+    <None Include="wwwroot\ressource\Sprites\Decoration\DustPath.png" />
+    <None Include="wwwroot\ressource\Sprites\Decoration\ladder.png" />
+    <None Include="wwwroot\ressource\Sprites\Decoration\PineTree.png" />
+    <None Include="wwwroot\ressource\Sprites\Door\Door.png" />
+    <None Include="wwwroot\ressource\Sprites\Door\OpenedDoor.png" />
+    <None Include="wwwroot\ressource\Sprites\Equipment\Key.png" />
+    <None Include="wwwroot\ressource\Sprites\Equipment\Knife.png" />
+    <None Include="wwwroot\ressource\Sprites\Equipment\Magic_tofu.png" />
+    <None Include="wwwroot\ressource\Sprites\Equipment\Maillot.png" />
+    <None Include="wwwroot\ressource\Sprites\Equipment\pickAxe.png" />
+    <None Include="wwwroot\ressource\Sprites\Equipment\torchItem.png" />
+    <None Include="wwwroot\ressource\Sprites\Fish\Fish_back.png" />
+    <None Include="wwwroot\ressource\Sprites\Fish\Fish_front1.png" />
+    <None Include="wwwroot\ressource\Sprites\Fish\Fish_front2.png" />
+    <None Include="wwwroot\ressource\Sprites\Fish\Fish_left.png" />
+    <None Include="wwwroot\ressource\Sprites\Fish\Fish_right.png" />
+    <None Include="wwwroot\ressource\Sprites\Ground\CaveFloor.png" />
+    <None Include="wwwroot\ressource\Sprites\Ground\CaveWall.png" />
+    <None Include="wwwroot\ressource\Sprites\Ground\CaveWallCorner.png" />
+    <None Include="wwwroot\ressource\Sprites\Ground\CaveWallOneSide.png" />
+    <None Include="wwwroot\ressource\Sprites\Ground\CaveWallOpposedSide.png" />
+    <None Include="wwwroot\ressource\Sprites\Ground\Grass1.png" />
+    <None Include="wwwroot\ressource\Sprites\Ground\Water1.png" />
+    <None Include="wwwroot\ressource\Sprites\Ground\WaterSide2.png" />
+    <None Include="wwwroot\ressource\Sprites\Ground\WaterSideTop.png" />
+    <None Include="wwwroot\ressource\Sprites\Hero\Perso_back.png" />
+    <None Include="wwwroot\ressource\Sprites\Hero\Perso_back_swimming.png" />
+    <None Include="wwwroot\ressource\Sprites\Hero\Perso_back_walking1.png" />
+    <None Include="wwwroot\ressource\Sprites\Hero\Perso_back_walking2.png" />
+    <None Include="wwwroot\ressource\Sprites\Hero\Perso_back_walking3.png" />
+    <None Include="wwwroot\ressource\Sprites\Hero\Perso_back_walking4.png" />
+    <None Include="wwwroot\ressource\Sprites\Hero\Perso_death.png" />
+    <None Include="wwwroot\ressource\Sprites\Hero\Perso_front.png" />
+    <None Include="wwwroot\ressource\Sprites\Hero\Perso_front2.png" />
+    <None Include="wwwroot\ressource\Sprites\Hero\Perso_front_swimming_1.png" />
+    <None Include="wwwroot\ressource\Sprites\Hero\Perso_front_swimming_2.png" />
+    <None Include="wwwroot\ressource\Sprites\Hero\Perso_Front_Walking1.png" />
+    <None Include="wwwroot\ressource\Sprites\Hero\Perso_Front_Walking2.png" />
+    <None Include="wwwroot\ressource\Sprites\Hero\Perso_Front_Walking3.png" />
+    <None Include="wwwroot\ressource\Sprites\Hero\Perso_Front_Walking4.png" />
+    <None Include="wwwroot\ressource\Sprites\Hero\Perso_Left.png" />
+    <None Include="wwwroot\ressource\Sprites\Hero\Perso_Left_swimming1.png" />
+    <None Include="wwwroot\ressource\Sprites\Hero\Perso_Left_swimming2.png" />
+    <None Include="wwwroot\ressource\Sprites\Hero\Perso_Left_walking.png" />
+    <None Include="wwwroot\ressource\Sprites\Hero\Perso_Right.png" />
+    <None Include="wwwroot\ressource\Sprites\Hero\Perso_Right_swimming1.png" />
+    <None Include="wwwroot\ressource\Sprites\Hero\Perso_Right_swimming2.png" />
+    <None Include="wwwroot\ressource\Sprites\Hero\Perso_Right_walking1.png" />
+    <None Include="wwwroot\ressource\Sprites\Hero\Perso_Right_walking2.png" />
+    <None Include="wwwroot\ressource\Sprites\PNJ\Deadgoblin.png" />
+    <None Include="wwwroot\ressource\Sprites\PNJ\FisherFishing.png" />
+    <None Include="wwwroot\ressource\Sprites\PNJ\Goblin_back.png" />
+    <None Include="wwwroot\ressource\Sprites\PNJ\Goblin_front.png" />
+    <None Include="wwwroot\ressource\Sprites\PNJ\Goblin_Left.png" />
+    <None Include="wwwroot\ressource\Sprites\PNJ\Goblin_Right.png" />
+    <None Include="wwwroot\ressource\Sprites\Torch\torch1.png" />
+    <None Include="wwwroot\ressource\Sprites\Torch\torch2.png" />
+    <None Include="wwwroot\ressource\Sprites\Torch\torch3.png" />
+    <None Include="wwwroot\ressource\Sprites\Torch\torchOff.png" />
+    <None Include="wwwroot\ressource\Sprites\Wall\BreakableWall.png" />
+    <None Include="wwwroot\ressource\Sprites\Wall\BrokenWall.png" />
+    <None Include="wwwroot\ressource\Sprites\Wall\BrokenWallVertical.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Test.Jeux.Data\Test.Jeux.Data.csproj" />
+    <ProjectReference Include="..\TestJeux.API\TestJeux.API.csproj" />
+    <ProjectReference Include="..\TestJeux.Business\TestJeux.Business.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Pages\MapDisplay.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Pages\MapDisplay.razor" />
+  </ItemGroup>
+
+</Project>
