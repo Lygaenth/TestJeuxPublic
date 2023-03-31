@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using TestBusiness.Mocks;
 using TestJeux.API.Services.LightSource;
 using TestJeux.Business.ObjectValues;
 using TestJeux.Business.Services;
@@ -19,16 +20,18 @@ namespace TestBusiness
 		{
 			_gameAggregate = new GameAggregate();
 			_lightSourceService = new LightSourceService(_gameAggregate);
-			_gameAggregate.AddLevel(new Level(1));
+			var level = new Level(1);
+			level.Items.Add(new MockLitItem(1, true, 75));
+			_gameAggregate.AddLevel(level);
 			_gameAggregate.SetLevelAsCurrent(1);
 		}
 
 		[Test]
 		public void TestGettingItemNotLit()
 		{
-			_gameAggregate.AddItemToCurrentLevel(1, ItemCode.Torche);
-			var torch = _gameAggregate.GetItemFromCurrentLevel(1);
-			torch.SetDefaultState(0);
+			var item = _gameAggregate.GetItemFromCurrentLevel(1);
+			var torch = item as ILightSource;
+			torch.LightState = torch.LightState.TurnOff();
 
 			var result = _lightSourceService.GetLightSourceState(1);
 
@@ -39,8 +42,6 @@ namespace TestBusiness
 		[Test]
 		public void TestGettingLitItem()
 		{
-			_gameAggregate.AddItemToCurrentLevel(1, ItemCode.Torche);
-
 			var result = _lightSourceService.GetLightSourceState(1);
 
 			Assert.That(result.IsLit, Is.True);
@@ -50,8 +51,6 @@ namespace TestBusiness
 		[Test]
 		public void TestChangingLitState()
 		{
-			_gameAggregate.AddItemToCurrentLevel(1, ItemCode.Torche);
-
 			var litItem = _gameAggregate.GetItemFromCurrentLevel(1) as ILightSource;
 			_lightSourceService.SetLightSourceState(1, new LightState(false, 12));
 

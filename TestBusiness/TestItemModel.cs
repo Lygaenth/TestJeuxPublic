@@ -29,7 +29,7 @@ namespace TestBusiness
 		public void GetReactionTestWithNoEffect()
 		{
 			var itemModel1 = new MockItemModel(0);
-			var goblinReaction = itemModel1.GetSpecificReaction(2, new MockItemModel(1));
+			var goblinReaction = itemModel1.GetSpecificReaction(3, new MockItemModel(1));
 			Assert.That(goblinReaction.Count, Is.EqualTo(0));
 		}
 
