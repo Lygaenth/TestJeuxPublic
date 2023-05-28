@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1-windows</TargetFramework>
+    <TargetFramework>net6.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
   </PropertyGroup>
@@ -14,6 +14,7 @@
   <ItemGroup>
     <ProjectReference Include="..\TestJeux.API\TestJeux.API.csproj" />
     <ProjectReference Include="..\TestJeux.Business\TestJeux.Business.csproj" />
+    <ProjectReference Include="..\TestJeux.Data.EFCore\TestJeux.Data.EFCore.csproj" />
   </ItemGroup>
 
   <ItemGroup>

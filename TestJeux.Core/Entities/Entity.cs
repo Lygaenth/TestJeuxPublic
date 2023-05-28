@@ -8,5 +8,7 @@
 		{
 			ID = id;
 		}
+
+		public abstract void Copy(Entity entity);
 	}
 }

@@ -1,4 +1,4 @@
-﻿using TestJeux.Core.Entities.Items;
+﻿using TestJeux.Business.Entities.Items;
 using TestJeux.SharedKernel.Enums;
 
 namespace TestJeux.Business.Entities.Equipments
@@ -6,9 +6,9 @@ namespace TestJeux.Business.Entities.Equipments
 	public class NoEquipment : Equipment
     {
         public NoEquipment()
-            : base("None", "")
+            : base(EquipmentCode.None, "None", "")
         {
-            ID = EquipmentCode.None.GetHashCode();
+
         }
 
         public override void Equip(ItemModel vm)

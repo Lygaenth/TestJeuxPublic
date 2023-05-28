@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using TestJeux.API.Models;
+using TestJeux.Business.Entities.Items;
 using TestJeux.Business.Managers.API;
 using TestJeux.Core.Aggregates;
-using TestJeux.Core.Entities.Items;
 using TestJeux.SharedKernel.Enums;
 
 namespace TestJeux.Business.Managers
@@ -76,6 +76,11 @@ namespace TestJeux.Business.Managers
 				throw new InvalidOperationException("Item " + itemId + " does not exist in current level");
 
 			return _gameRoot.GetItemFromCurrentLevel(itemId).Orientation;
+		}
+
+		public int GetControlledItemId()
+		{
+			return _gameRoot.GetControlledItem().ID;
 		}
 	}
 }

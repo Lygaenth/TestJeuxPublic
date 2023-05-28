@@ -77,7 +77,20 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid Grid.Row="1" Grid.Column="0" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
             <local:StatsDisplay DataContext="{Binding DisplayVm.LevelVm.SelectedItem.Stats}" />
+            <DockPanel Grid.Row="1">
+                <Label Content="FPS: " Foreground="Red" />
+                <Label Content="{Binding DisplayVm.FPS}" Foreground="Red"/>
+            </DockPanel>
+            <DockPanel Grid.Row="2">
+                <Label Content="Refresh time: " Foreground="Red" />
+                <Label Content="{Binding DisplayVm.RefreshTime}"  Foreground="Red"/>
+            </DockPanel>
         </Grid>
         <Grid DataContext="{Binding DisplayVm}"  Grid.Row="1" Grid.Column="1">
             <Canvas DataContext="{Binding LevelVm}"  Width="800" Height="800" >
@@ -91,7 +104,7 @@
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
                                 <Canvas>
-                                    <Image Source="{Binding Sprite}"  Canvas.Top="{Binding Y}" Canvas.Left="{Binding X}" Width="50" Height="50" >
+                                    <Image Source="{Binding Sprite}"  Canvas.Top="{Binding Y}" Canvas.Left="{Binding X}"  >
                                         <Image.LayoutTransform>
                                             <RotateTransform CenterX="25" CenterY="25" Angle="{Binding Angle}"/>
                                         </Image.LayoutTransform>
@@ -112,7 +125,11 @@
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
                                     <Canvas>
-                                        <Image Source="{Binding Sprite}"  Canvas.Top="{Binding Y}" Canvas.Left="{Binding X}" />
+                                        <Image Source="{Binding Sprite}"  Canvas.Top="{Binding Y}" Canvas.Left="{Binding X}" >
+                                            <Image.LayoutTransform>
+                                                <RotateTransform CenterX="25" CenterY="25" Angle="{Binding Angle}"/>
+                                            </Image.LayoutTransform>
+                                        </Image>
                                     </Canvas>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>

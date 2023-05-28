@@ -1,7 +1,7 @@
 ﻿using System;
 using TestJeux.Business.ObjectValues;
 
-namespace TestJeux.Core.Entities.Items
+namespace TestJeux.API.Models
 {
 	/// <summary>
 	/// Light source

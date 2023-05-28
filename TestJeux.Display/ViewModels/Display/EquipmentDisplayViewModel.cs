@@ -47,9 +47,7 @@ namespace TestJeux.Display.ViewModels.Display
         private void OnEquipmentUpdated(object sender, EquipmentEventArgs args)
         {
             var equipments = _equipmentManager.GetAvailableEquipments();
-            if (Equipments.Count > 0 && Equipments.Any(e => e.IsEquiped))
-                Equipments.First(e => e.IsEquiped).Unequip(_characterManager.GetCharacter(_characterId).ID);
-
+            
             foreach (var item in Equipments)
             {
                 if (item.ID != args.ID)
@@ -72,8 +70,11 @@ namespace TestJeux.Display.ViewModels.Display
                     continue;
 
                 var newEquip = new EquipmentViewModel(equip, _characterManager);
-                newEquip.Equip(_characterManager.GetCharacter(_characterId).ID);
-                _selectedEquipmentIndex = Equipments.Count;
+                if (!Equipments.Any(e => e.IsEquiped) && equip.IsUnique)
+                {
+                    newEquip.Equip(_characterManager.GetCharacter(_characterId).ID);
+                    _selectedEquipmentIndex = Equipments.Count;
+                }
                 Application.Current.Dispatcher.Invoke(() =>
                 {
                     Equipments.Add(newEquip);

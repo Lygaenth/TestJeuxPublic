@@ -2,7 +2,7 @@ using Moq;
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.Drawing;
-using Test.Jeux.Data.Api;
+using TestJeux.Data.Api;
 using TestJeux.API.Models;
 using TestJeux.Business.Services;
 using TestJeux.Core.Aggregates;
@@ -24,7 +24,7 @@ namespace TestBusiness
 		{
 			_gameRoot = new GameAggregate();
 			_mockDalLevel = new Mock<IDALLevels>();
-			_levelService = new LevelService(_gameRoot, _mockDalLevel.Object);
+			_levelService = new LevelService(_gameRoot, _mockDalLevel.Object, _mockDalLevel.Object);
 			_wasLevelChangeRequested = 0;
 			_lastLevelIdChangeRequest = -1;
 		}

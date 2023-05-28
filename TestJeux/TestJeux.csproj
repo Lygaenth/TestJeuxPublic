@@ -2,19 +2,24 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net6.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
-    <BaseOutputPath>F:\repo\Game1\TestJeux\sortie</BaseOutputPath>
+    <BaseOutputPath>.\..\sortie</BaseOutputPath>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.5">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Prism.Core" Version="8.1.97" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\TestJeux.API\TestJeux.API.csproj" />
     <ProjectReference Include="..\TestJeux.Business\TestJeux.Business.csproj" />
+    <ProjectReference Include="..\TestJeux.Data.EFCore\TestJeux.Data.EFCore.csproj" />
     <ProjectReference Include="..\TestJeux.Display\TestJeux.Display.csproj" />
   </ItemGroup>
 
@@ -23,9 +28,22 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="ressource\**">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    <Compile Remove="bin\**" />
+    <Compile Remove="ressource\**" />
+    <Compile Remove="SortieWebApp\**" />
+    <Compile Remove="sortie\**" />
+    <EmbeddedResource Remove="bin\**" />
+    <EmbeddedResource Remove="ressource\**" />
+    <EmbeddedResource Remove="SortieWebApp\**" />
+    <EmbeddedResource Remove="sortie\**" />
+    <None Remove="bin\**" />
+    <None Remove="ressource\**" />
+    <None Remove="SortieWebApp\**" />
+    <None Remove="sortie\**" />
+    <Page Remove="bin\**" />
+    <Page Remove="ressource\**" />
+    <Page Remove="SortieWebApp\**" />
+    <Page Remove="sortie\**" />
   </ItemGroup>
 
 </Project>

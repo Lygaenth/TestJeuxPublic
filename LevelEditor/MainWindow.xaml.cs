@@ -1,7 +1,7 @@
-﻿using System.Windows;
+﻿using LevelEditor.wpf.ViewModel;
+using System.Windows;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
-using TestJeux.Display.ViewModels.Display.Levelelements;
 
 namespace LevelEditor
 {

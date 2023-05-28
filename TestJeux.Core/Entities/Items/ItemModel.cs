@@ -9,8 +9,9 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Threading;
+using TestJeux.Business.Entities.Equipments;
 
-namespace TestJeux.Core.Entities.Items
+namespace TestJeux.Business.Entities.Items
 {
 	public abstract class ItemModel : Entity
     {
@@ -26,6 +27,7 @@ namespace TestJeux.Core.Entities.Items
         public bool IsGround { get; set; }
         public bool CanBePushed { get; set; }
         public bool IsMoving { get; set; }
+        public int DefaultState { get; set; }
 
 		public StatsModel Stats { get; set; }
 		protected SpriteModel SpriteModel { get; set; }
@@ -62,8 +64,9 @@ namespace TestJeux.Core.Entities.Items
 		public List<string> CurrentSprites;
 		public string SpeakingSprite { get; set; }
 
+        public List<Equipment> Equipments { get; set; }
 
-		public event EventHandler<Movement> Moved;
+        public event EventHandler<Movement> Moved;
         public event EventHandler<ItemExchange> ItemProvided;
 		public event EventHandler<ItemExchange> ItemConsumed;
 		public event EventHandler<Speaker> SpeakingRequested;
@@ -84,6 +87,8 @@ namespace TestJeux.Core.Entities.Items
             HasScript = false;
             CurrentSprites = new List<string>();
             SpeakingSprite = "Error";
+
+            Equipments = new List<Equipment>();
         }
 
         public virtual void Initialize()
@@ -297,12 +302,24 @@ namespace TestJeux.Core.Entities.Items
             return false;
         }
 
-		#region Notifications
-		/// <summary>
-		/// Notify text event
-		/// </summary>
-		/// <param name="speaker"></param>
-		protected void NotifySpeakRequest(Speaker speaker)
+        public override void Copy(Entity entity)
+        {
+            // Do nothing for now
+        }
+
+        protected void UpdateCurrentSprites(List<string> spriteNames)
+        {
+            CurrentSprites.Clear();
+            CurrentSprites.AddRange(spriteNames);
+            Refresh();
+        }
+
+        #region Notifications
+        /// <summary>
+        /// Notify text event
+        /// </summary>
+        /// <param name="speaker"></param>
+        protected void NotifySpeakRequest(Speaker speaker)
 		{
 			if (SpeakingRequested != null)
 				SpeakingRequested(this, speaker);

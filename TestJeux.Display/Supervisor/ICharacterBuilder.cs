@@ -1,4 +1,4 @@
-﻿using TestJeux.Core.Entities.Items;
+﻿using TestJeux.Business.Entities.Items;
 using TestJeux.Display.ViewModels.Display;
 
 namespace TestJeux.Business.Supervisor

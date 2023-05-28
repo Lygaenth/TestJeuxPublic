@@ -1,7 +1,7 @@
 ﻿using TestJeux.Business.Entities.Equipments;
+using TestJeux.Business.Entities.Items;
 using TestJeux.Business.Managers.API;
 using TestJeux.Core.Entities;
-using TestJeux.Core.Entities.Items;
 using TestJeux.SharedKernel.Enums;
 
 namespace TestJeux.Business.Action
@@ -44,6 +44,7 @@ namespace TestJeux.Business.Action
         {
             if (_action == ItemAction.Add)
             {
+                _item.Equipments.Add(_equipment);
                 _equipmentManager.AddEquipment(_equipment);
             }
             else if (_action == ItemAction.Remove)

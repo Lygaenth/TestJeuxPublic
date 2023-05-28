@@ -28,7 +28,7 @@ namespace TestJeux.Display.Managers
 		{
 			_game = game;
 			_musicPlayer = new MediaPlayer();
-			_musicPlayer.Volume = 0;
+			_musicPlayer.Volume = 1;
 			_soundEffectPlayer = new MediaPlayer();
 			_soundEffectPlayer.Volume = 1;
 			_currentMusic = Musics.None;

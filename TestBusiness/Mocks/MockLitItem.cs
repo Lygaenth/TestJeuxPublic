@@ -1,6 +1,6 @@
 ﻿using System;
+using TestJeux.API.Models;
 using TestJeux.Business.ObjectValues;
-using TestJeux.Core.Entities.Items;
 
 namespace TestBusiness.Mocks
 {

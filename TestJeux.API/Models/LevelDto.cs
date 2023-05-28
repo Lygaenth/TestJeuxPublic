@@ -4,7 +4,7 @@ using TestJeux.SharedKernel.Enums;
 
 namespace TestJeux.API.Models
 {
-	[XmlRootAttribute("Level", Namespace = "http://www.cpandl.com",IsNullable = false)]
+	[XmlRootAttribute("Level", IsNullable = false)]
     public class LevelDto
     {
         public LevelDto()

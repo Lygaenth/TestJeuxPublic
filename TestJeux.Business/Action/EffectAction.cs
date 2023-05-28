@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
+using TestJeux.Business.Entities.Items;
 using TestJeux.Core.Entities;
-using TestJeux.Core.Entities.Items;
 using TestJeux.SharedKernel.Enums;
 
 namespace TestJeux.Business.Action

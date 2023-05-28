@@ -4,8 +4,8 @@ using System.Drawing;
 using System.Threading;
 using System.Windows.Media.Imaging;
 using TestJeux.API.Services;
+using TestJeux.Business.Entities.Items;
 using TestJeux.Business.Managers.API;
-using TestJeux.Core.Entities.Items;
 using TestJeux.Display.Helper;
 using TestJeux.Display.ViewModels.Base;
 using TestJeux.Display.ViewModels.Display.Stats;
@@ -15,6 +15,10 @@ namespace TestJeux.Display.ViewModels.Display
 {
 	public class ItemViewModel : BaseViewModel
     {
+		private const int DefaultCaseChangetime = 800;
+		private const int ThreadSleep = 30;
+		private const int Step = 5;
+
 		private readonly IMoveService _moveManager;
 		private readonly ICharacterManager _characterManager;
 
@@ -103,23 +107,27 @@ namespace TestJeux.Display.ViewModels.Display
 			Code = model.Code;
 			IsSelected = _model.ItemType == ItemType.Character;
             Priority = model.Priority;
-			AnimationDuration = 1000;
+			AnimationDuration = 500;
 			X = _model.X;
 			Y = _model.Y;
 
 			Stats = new StatsViewModel(_model.Stats);
+		}
 
-			if (_moveManager != null)
-				_moveManager.MoveStarted += OnMoveStarted;
+		public void Subscribe()
+		{
+			_moveManager.MoveStarted += OnMoveStarted;
+		}
+
+		public void Unsubscribe()
+		{
+			_moveManager.MoveStarted -= OnMoveStarted;
 		}
 
 		private void OnMoveStarted(object? sender, MovementDto e)
 		{
 			if (sender == null || !Int32.TryParse(sender.ToString(), out int id) || id != ID)
 				return;
-
-			System.Diagnostics.Debug.WriteLine("On move started raised twice");
-
 
 			MoveCharacter(e.Direction);
 		}
@@ -159,10 +167,9 @@ namespace TestJeux.Display.ViewModels.Display
 		/// <param name="itemId"></param>
 		public void MoveCharacter(DirectionEnum direction)
 		{
-			System.Diagnostics.Debug.WriteLine("item Vm Move once");
-			int step = ConstantesDisplay.UnitSize / 10;
+			Debug.WriteLine("VM move started");
 			int sens = (direction == DirectionEnum.Top || direction == DirectionEnum.Left) ? -1 : +1;
-			step *= sens;
+			var step = Step * sens;
 
 			if (direction == DirectionEnum.Bottom || direction == DirectionEnum.Top)
 			{
@@ -170,7 +177,7 @@ namespace TestJeux.Display.ViewModels.Display
 				while (Y != startingPoint + sens * ConstantesDisplay.UnitSize)
 				{
 					ExecuteUithread(() => Y += step);
-					Thread.Sleep(25);
+					Thread.Sleep(ThreadSleep);
 				}
 			}
 			else
@@ -179,11 +186,14 @@ namespace TestJeux.Display.ViewModels.Display
 				while (X != startingPoint + sens * ConstantesDisplay.UnitSize)
 				{
 					ExecuteUithread(() => X += step);
-					Thread.Sleep(25);
+					Thread.Sleep(ThreadSleep);
 				}
 			}
+
+			if (!_moveManager.HasQueuedMove(ID))
+				IsMoving = false;
+
 			_moveManager.NotifyEndOfMove(ID);
-			IsMoving = false;
 			RefreshSprite();
 		}
 	}

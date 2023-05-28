@@ -10,6 +10,7 @@
              d:DesignHeight="450" d:DesignWidth="800" >
     <UserControl.Resources>
         <TS:ShaderDataTemplateSelector x:Key="ShaderSelector" />
+        <Converters:ConverterToPathShadow x:Key="PathConverterShadow" />
         <Converters:ConverterToPath x:Key="PathConverter" />
         <DataTemplate x:Key="Natural" />
         <DataTemplate x:Key="Evening">
@@ -18,8 +19,11 @@
             </Grid>
         </DataTemplate>
         <DataTemplate x:Key="Cave">
-            <Grid>
-                <Path Fill="Black" Opacity="0.99" Data="{Binding Sources, Converter={StaticResource PathConverter}}"  />
+            <Grid Margin="0" Width="800" Height="800">
+                <Grid>
+                    <!--<Path Fill="Black" Opacity="0.2" Data="{Binding Sources, Converter={StaticResource PathConverterShadow}}" />-->
+                    <Path Fill="Black" Opacity="0.99" Data="{Binding Sources, Converter={StaticResource PathConverter}}" />
+                </Grid>
             </Grid>
         </DataTemplate>
     </UserControl.Resources>

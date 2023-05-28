@@ -12,11 +12,7 @@ namespace TestJeux.Core.Entities.LevelElements
 		/// </summary>
 		public Point BottomRight { get; set; }
 
-		/// <summary>
-		/// Angle for tile rotation
-		/// </summary>
-		public int Angle {  get; set; }
-
+	
 		/// <summary>
 		/// Tile zone constructor
 		/// </summary>
@@ -26,10 +22,9 @@ namespace TestJeux.Core.Entities.LevelElements
 		/// <param name="bottomRight"></param>
 		/// <param name="angle"></param>
 		public TileZone(int id, GroundSprite enumValue, Point topLeft, Point bottomRight, int angle)
-			: base(id, enumValue, topLeft)
+			: base(id, enumValue, topLeft, angle)
 		{
 			BottomRight = bottomRight;
-			Angle = angle;
 		}
 	}
 }

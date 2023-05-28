@@ -24,7 +24,7 @@ namespace TestJeux.Display.Converter
 
                     var cg = new CombinedGeometry() { GeometryCombineMode = GeometryCombineMode.Exclude };
                     cg.Geometry1 = currentGeometry;
-                    cg.Geometry2 = new EllipseGeometry(new Point(source.Center.X, source.Center.Y), source.LightIntensity, source.LightIntensity);
+                    cg.Geometry2 = new EllipseGeometry(new Point(source.Center.X, source.Center.Y), source.LightIntensity + (DateTime.Now.Millisecond / 200 % 3), source.LightIntensity + (DateTime.Now.Millisecond / 200  % 3));
                     currentGeometry = cg;
                 }
             }

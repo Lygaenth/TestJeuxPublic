@@ -1,37 +1,47 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using Test.Jeux.Data.Api;
+using TestJeux.Data.Api;
 using TestJeux.API.Models;
 using TestJeux.Business.Entities.LevelElements;
 using TestJeux.Business.Services.API;
 using TestJeux.Core.Aggregates;
-using TestJeux.Core.Entities.LevelElements;
 using TestJeux.SharedKernel.Enums;
+using TestJeux.API.Converters;
 
 namespace TestJeux.Business.Services
 {
 	public class LevelService : ILevelService
     {
         #region Attributes
-        GameAggregate _game;
-        IDALLevels _dal;
+        protected GameAggregate _game;
+        private readonly IDALLevels _dal;
+        private readonly IDALLevels _dalEF;
+
         public event LevelChange RaiseLevelChange;
 		#endregion
 
 
-		public LevelService(GameAggregate gameAggregate, IDALLevels dalLevels)
+		public LevelService(GameAggregate gameAggregate, IDALLevels dalLevels, IDALLevels dalEf)
         {
             _game = gameAggregate;
             _dal = dalLevels;
+            _dalEF = dalEf;
         }
 
         #region public methods
+        /// <summary>
+        /// Reset level states to database
+        /// </summary>
         public void Reset()
         {
             _game.ClearState();
         }
 
+        /// <summary>
+        /// Get all existing level IDs
+        /// </summary>
+        /// <returns></returns>
         public List<int> GetAllLevelIds()
         {
             var levels = _dal.LoadAllLevels().Select(l => l.ID).ToList();
@@ -39,15 +49,24 @@ namespace TestJeux.Business.Services
             return levels;
         }
 
+        /// <summary>
+        /// Get level
+        /// </summary>
+        /// <param name="levelId"></param>
+        /// <returns></returns>
         public LevelDto GetLevel(int levelId)
         {
             if (!_game.HasLevel(levelId))
                 _game.AddLevel(CreateLevel(levelId));
             _game.SetLevelAsCurrent(levelId);
 
-            return CreateLevelDto(_game.GetCurrentLevel());
+            return _game.GetCurrentLevel().Convert();
         }
 
+        /// <summary>
+        /// Get current level
+        /// </summary>
+        /// <returns></returns>
         public int GetCurrentLevel()
         {
             if (_game.GetCurrentLevel() == null)
@@ -85,6 +104,10 @@ namespace TestJeux.Business.Services
             return GroundType.Neutral;
         }
 
+        /// <summary>
+        /// Change level
+        /// </summary>
+        /// <param name="id"></param>
         public void ChangeLevel(int id)
         {
             if (RaiseLevelChange != null)
@@ -93,36 +116,26 @@ namespace TestJeux.Business.Services
         #endregion
 
         #region private methods
+        /// <summary>
+        /// Load level by ID
+        /// </summary>
+        /// <param name="levelId"></param>
+        /// <returns></returns>
         private Level CreateLevel(int levelId)
         {
             var levelDto = _dal.GetDataById(levelId);
-            var level = CreateLevel(levelDto);
+            var level = InitializeLevel(levelDto);
             return level;
         }
 
-        private Level CreateLevel(LevelDto levelDto)
+        /// <summary>
+        /// Initialize level
+        /// </summary>
+        /// <param name="levelDto"></param>
+        /// <returns></returns>
+        private Level InitializeLevel(LevelDto levelDto)
         {
-            var level = new Level(levelDto.ID);
-            level.Shader = levelDto.Shader;
-            level.Music = levelDto.LevelMusic;
-            level.DefaultTile = (GroundSprite)levelDto.DefaultTile;
-
-            foreach (var zone in levelDto.Zones)
-                level.Zones.Add(new ZoneModel(zone.ID, zone.TopLeft, zone.BottomRight, zone.GroundType));
-
-            int decorationId = 0;
-            foreach (var decoration in levelDto.Decorations)
-            {
-                level.Decorations.Add(new Decoration(decorationId, decoration.Decoration, decoration.TopLeft));
-                decorationId++;
-            }
-
-            int id = 0;
-            foreach (var tileZone in levelDto.TilesZones)
-            {
-                id++;
-                level.Tiles.Add(new TileZone(id, tileZone.Tile, tileZone.TopLeft, tileZone.BottomRight, tileZone.Angle));
-            }
+            var level = levelDto.Convert();
 
             _game.AddLevel(level);
             _game.SetLevelAsCurrent(level.ID);
@@ -139,43 +152,28 @@ namespace TestJeux.Business.Services
             return level;
         }
 
-        private LevelDto CreateLevelDto(Level level)
-        {
-            var dto = new LevelDto();
-            dto.ID = level.ID;
-            dto.LevelMusic = level.Music;
-            dto.Shader = level.Shader;
-
-            foreach (var zone in level.Zones)
-                dto.Zones.Add(new ZoneDto(zone.ID, zone.BottomRight, zone.TopLeft, zone.GroundType));
-
-            foreach (var decoration in level.Decorations)
-                dto.Decorations.Add(new DecorationDto() { Decoration = decoration.Enumvalue, TopLeft = decoration.TopLeft });
-
-            dto.TilesZones = Convert(level.Tiles);
-            dto.ItemsIDs = level.Items.Select(i => i.ID).ToList();
-            return dto;
-        }
-
+        /// <summary>
+        /// Check if point is in rectangle
+        /// </summary>
+        /// <param name="topLeft"></param>
+        /// <param name="bottomRight"></param>
+        /// <param name="point"></param>
+        /// <returns></returns>
         private bool IsPointInRectangle(Point topLeft, Point bottomRight, Point point)
         {
             return !(point.X < topLeft.X || point.Y < topLeft.Y || point.X >= bottomRight.X || point.Y >= bottomRight.Y);
         }
 
-        public void SaveLevel(LevelDto level)
+        /// <summary>
+        /// Save level associated to specific ID
+        /// </summary>
+        /// <param name="levelId"></param>
+        public void SaveLevel(int levelId)
         {
-            _dal.SaveLevel(level);
+            //_dal.SaveLevel(level);
+            _dal.SaveLevel(_game.GetLevel(levelId).Convert());
         }
         #endregion
-
-        private List<TileZoneDto> Convert(List<TileZone> tileZones)
-        {
-            var listDtos = new List<TileZoneDto>();
-            foreach(var tileZone in tileZones)
-                listDtos.Add(new TileZoneDto() { Tile = tileZone.Enumvalue, TopLeft = tileZone.TopLeft, BottomRight = tileZone.BottomRight, Angle = tileZone.Angle });
-
-            return listDtos;
-        }
 
 		public void Subscribe()
 		{

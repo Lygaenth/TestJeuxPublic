@@ -9,7 +9,7 @@ using System;
 using System.Windows;
 using TestJeux.Business.Supervisor;
 using TestJeux.Display.ViewModels.Base;
-using Test.Jeux.Data;
+using Test.Jeux.Data.Xml;
 using TestJeux.Display.ViewModels.Display;
 using TestJeux.API.Services.LightSource;
 using TestJeux.Display.Controllers;
@@ -25,6 +25,7 @@ using TestJeux.Core.Aggregates;
 using TestJeux.Core.ObjectValues;
 using TestJeux.Core.Entities;
 using TestJeux.API.Services;
+using TestJeux.Core.Context;
 
 namespace TestJeux.Display.ViewModels
 {
@@ -104,7 +105,7 @@ namespace TestJeux.Display.ViewModels
             _equipmentManager = new EquipmentManager(gameRoot);
 
             // Initialize services but should be injected later
-            _levelService = new LevelService(gameRoot, new DALLevels());
+            _levelService = new LevelService(gameRoot, new DALLevels(), new GameContext());
             _chatService = new ChatService(gameRoot);
 			_actionManager = new ActionManager(gameRoot, _chatService);
 
@@ -157,10 +158,12 @@ namespace TestJeux.Display.ViewModels
             KeyBoardVm.RequestSwitchEquipment += OnRequestSwitchEquipment;
 
             _controllerManager.MoveRaised += OnMoveRaised;
+			_controllerManager.NoActionRaised += OnNoActionRaised;
             _controllerManager.Start();
         }
 
-        private void OnRequestGameQuit(object sender, EventArgs e)
+
+		private void OnRequestGameQuit(object sender, EventArgs e)
         {
             ActionQuit();
         }
@@ -211,11 +214,17 @@ namespace TestJeux.Display.ViewModels
             if (View == ViewEnum.Menu)
                 MainMenuVm.MoveCursor(direction);
             else
-                Move(direction);
+				Move(direction);
         }
 
-        #region Commands
-        public void ActionStart()
+		private void OnNoActionRaised(object sender)
+		{
+            if (_selectedLevel.SelectedItem != null)
+                _moveManager.ClearQueudMove(_selectedLevel.SelectedItem.ID);
+		}
+
+		#region Commands
+		public void ActionStart()
         {
             View = ViewEnum.Game;
 
@@ -275,7 +284,7 @@ namespace TestJeux.Display.ViewModels
             if (DisplayTextVm.IsTalking())
                 return;
 
-            if (DisplayVm.LevelVm.SelectedItem == null || DisplayVm.LevelVm.SelectedItem.IsMoving || _actionManager.IsActionBlocking() || _actionManager.IsActionWaitingForAquittement())
+            if (DisplayVm.LevelVm.SelectedItem == null || _actionManager.IsActionWaitingForAquittement())
                 return;
 
             var target = GetTargets(direction, item);
@@ -284,13 +293,12 @@ namespace TestJeux.Display.ViewModels
                 _characterManager.SetCharacterOrientation(item.ID, direction);
 
                 var model = _characterManager.GetCharacter(item.ID);
+                if (model.IsMoving)
+                    _moveManager.QueueMove(direction, item.ID);
 
 				// Move character
-				if (_moveManager.CanMove(model.GetMoveType(), _moveManager.GetTargetPosition(item.Position, direction)))
-                {
-                    var move = _actionFabric.CreatePjMoveAction(model, target.GroundType);
-                    _actionManager.AddAction(move);
-                }
+				if (!item.IsMoving && _moveManager.CanMove(model.GetMoveType(), _moveManager.GetTargetPosition(item.Position, direction)))
+                    _moveManager.MoveCharacter(direction, item.ID);
             }
         }
 
@@ -379,6 +387,7 @@ namespace TestJeux.Display.ViewModels
 
             ExecuteUithread(() =>
             {
+                DisplayVm.Shader.Unload();
                 DisplayVm.Shader = new ShaderViewModel(_selectedLevel.Shader, _lightSourceService, _selectedLevel.Items.ToList());
 
                 if (DisplayVm.LevelVm.SelectedItem != null)

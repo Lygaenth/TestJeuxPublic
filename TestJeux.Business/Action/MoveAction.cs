@@ -1,6 +1,6 @@
-﻿using TestJeux.Business.Managers.API;
+﻿using TestJeux.Business.Entities.Items;
+using TestJeux.Business.Managers.API;
 using TestJeux.Core.Entities;
-using TestJeux.Core.Entities.Items;
 using TestJeux.SharedKernel.Enums;
 
 namespace TestJeux.Business.Action
@@ -17,7 +17,7 @@ namespace TestJeux.Business.Action
 
         public DirectionEnum Direction { get; set; }
 
-        IMoveService _moveManager;
+        private readonly IMoveService _moveManager;
 
         bool _withCheck;
 
@@ -43,7 +43,6 @@ namespace TestJeux.Business.Action
             Source.ChangeState(GroundType);
             _moveManager.MoveCharacter(Direction, Source.ID);
             IsCompleted = true;
-            Source.IsMoving = false;
             return false;
         }
 

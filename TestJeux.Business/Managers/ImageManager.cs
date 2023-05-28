@@ -111,8 +111,10 @@ namespace TestJeux.Business.Managers
 
 			// Equipment
 			_images["Maillot"] = GetPath(Equipment, "Maillot");
+			_images["Swimsuit"] = GetPath(Equipment, "Maillot");
 			_images["TorchItem"] = GetPath(Equipment, "torchItem");
 			_images["PickAxe"] = GetPath(Equipment, "pickAxe");
+			_images["DoorKey"] = GetPath(Equipment, "Key");
 			_images["Key"] = GetPath(Equipment, "Key");
 			_images["Knife"] = GetPath(Equipment, "Knife");
 
@@ -136,6 +138,7 @@ namespace TestJeux.Business.Managers
 			_images["CaveEntry"] = GetPath(Decoration, "CaveEntry");
 			_images["PineTree"] = GetPath(Decoration, "PineTree");
 			_images["Ladder"] = GetPath(Decoration, "Ladder");
+			_images["CaveUp"] = GetPath(Decoration, "CaveUp");
 
 			// Various
 			_images["MagicTofu"] = GetPath(Equipment, "Magic_tofu");

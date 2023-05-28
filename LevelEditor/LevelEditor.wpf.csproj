@@ -2,10 +2,10 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>netcoreapp3.1-windows</TargetFramework>
+    <TargetFramework>net6.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
-    <BaseOutputPath>F:\repo\Game1\TestJeux\sortie</BaseOutputPath>
+    <BaseOutputPath>.\..\sortie</BaseOutputPath>
   </PropertyGroup>
 
   <ItemGroup>
@@ -13,6 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\TestJeux.Business.Edition\TestJeux.Business.Edition.csproj" />
     <ProjectReference Include="..\TestJeux.Display\TestJeux.Display.csproj" />
   </ItemGroup>
 

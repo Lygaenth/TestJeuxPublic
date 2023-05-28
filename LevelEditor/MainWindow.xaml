@@ -177,7 +177,11 @@
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
                                 <Canvas>
-                                    <Image Source="{Binding Sprite}"  Canvas.Top="{Binding Y}" Canvas.Left="{Binding X}" />
+                                    <Image Source="{Binding Sprite}"  Canvas.Top="{Binding Y}" Canvas.Left="{Binding X}"  >
+                                        <Image.LayoutTransform>
+                                            <RotateTransform CenterX="25" CenterY="25" Angle="{Binding Angle}"/>
+                                        </Image.LayoutTransform>
+                                    </Image>
                                 </Canvas>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>

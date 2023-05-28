@@ -18,7 +18,7 @@ namespace TestJeux.Business.Managers
             int id = 0;
             foreach (var deco in decorationDtos)
             {
-                decorations.Add(new Decoration(id, deco.Decoration, deco.TopLeft));
+                decorations.Add(new Decoration(id, deco.Decoration, deco.TopLeft, deco.Angle));
                 id++;
             }
 

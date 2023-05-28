@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using TestJeux.API.Services.TextInteractions;
 using TestJeux.Business.Action;
+using TestJeux.Business.Entities.Items;
 using TestJeux.Business.Managers.API;
 using TestJeux.Business.Services.API;
-using TestJeux.Core.Entities.Items;
 using TestJeux.SharedKernel.Enums;
 
 namespace TestJeux.Business.Entities.Action

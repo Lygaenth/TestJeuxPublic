@@ -10,7 +10,13 @@ namespace TestJeux.API.Models
         private Point _topLeft;
 
         [XmlAttribute("ID")]
+        public int ID { get; set; }
+
+        [XmlAttribute("Type")]
         public Decorations Decoration { get; set; }
+
+        [XmlAttribute]
+        public int Angle { get; set; }
 
         [XmlIgnore]
         public Point TopLeft

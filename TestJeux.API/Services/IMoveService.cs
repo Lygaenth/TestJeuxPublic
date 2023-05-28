@@ -58,10 +58,29 @@ namespace TestJeux.Business.Managers.API
 		void MoveCharacter(DirectionEnum direction, int id);
 
 		/// <summary>
+		/// Queue movement for next action
+		/// </summary>
+		/// <param name="direction"></param>
+		/// <param name="id"></param>
+		void QueueMove(DirectionEnum direction, int id);
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="id"></param>
+		bool HasQueuedMove(int id);
+
+		/// <summary>
 		/// Notify that movement is completed
 		/// </summary>
 		/// <param name="itemId"></param>
 		void NotifyEndOfMove(int itemId);
+
+		/// <summary>
+		/// Clear queued move for item
+		/// </summary>
+		/// <param name="id"></param>
+		void ClearQueudMove(int id);
 
 		event EventHandler<MovementDto> MoveStarted;
 

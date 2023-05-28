@@ -8,13 +8,15 @@ namespace TestJeux.Display.ViewModels.Display.Levelelements
 {
 	public class TileViewModel : BindableBase
     {
+        public int ID { get; }
         private int _spriteIndex = 0;
         private DateTime _lastRefreshTime = DateTime.Now;
 
         public string Position { get => "Position: (" + X + "," + Y + ")"; }
 
-        public TileViewModel(List<CachedBitmap> sprites, GroundSprite groundSprite, int x, int y, int angle)
+        public TileViewModel(int id, List<CachedBitmap> sprites, GroundSprite groundSprite, int x, int y, int angle)
         {
+            ID = id;
             _lastRefreshTime = DateTime.Now;
             _sprites = sprites;
             Sprite = _sprites[0];
@@ -48,6 +50,11 @@ namespace TestJeux.Display.ViewModels.Display.Levelelements
         {
             get => _angle;
             set => SetProperty(ref _angle, value);
+        }
+
+        public bool CanRefresh()
+        {
+            return _sprites.Count > 1;
         }
 
         public void UpdateSprites(List<CachedBitmap> bitmaps)

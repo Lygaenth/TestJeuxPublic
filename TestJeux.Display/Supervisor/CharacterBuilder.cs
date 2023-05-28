@@ -1,6 +1,6 @@
 ﻿using System;
+using TestJeux.Business.Entities.Items;
 using TestJeux.Business.Managers.API;
-using TestJeux.Core.Entities.Items;
 using TestJeux.Display.ViewModels;
 using TestJeux.Display.ViewModels.Display;
 using TestJeux.SharedKernel.Enums;

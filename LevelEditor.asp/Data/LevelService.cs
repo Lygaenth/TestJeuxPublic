@@ -1,47 +1,77 @@
-﻿using Test.Jeux.Data;
-using Test.Jeux.Data.Api;
+﻿using LevelEditor.asp.Data.Api;
+using System.Text;
+using System.Text.Json;
 using TestJeux.API.Models;
 
 namespace LevelEditor.asp.Data
 {
-	public class LevelService
+	public class LevelService : ILevelService
 	{
-		private readonly IDALLevels _dal;
-		private List<LevelDto> _levels;
 
-		public LevelService()
+		private readonly HttpClient _httpClient;
+		private JsonSerializerOptions _serializerOptions;
+
+		/// <summary>
+		/// Constructor
+		/// </summary>
+		/// <param name="httpClient"></param>
+		public LevelService(HttpClient httpClient)
 		{
-			_dal = new DALLevels();
-			_levels = new List<LevelDto>();
+			_httpClient = httpClient;
+			_serializerOptions = new JsonSerializerOptions() { PropertyNameCaseInsensitive = true };
 		}
 
-		public List<int> GetLevelList()
+		/// <summary>
+		/// Get all level IDs
+		/// </summary>
+		/// <returns></returns>
+		public async Task<List<int>> GetLevelIds()
 		{
-			if (_levels.Any())
-				return _levels.Select(s => s.ID).ToList();
-			return _dal.LoadAllLevels().Select(a => a.ID).ToList();
+			var ids = await JsonSerializer.DeserializeAsync<IEnumerable<int>>(await _httpClient.GetStreamAsync($"/Levels/ids"), _serializerOptions);
+			if (ids == null)
+				return new List<int>();
+			return ids.ToList();
 		}
 
-		public LevelDto GetLevel(int id)
+		/// <summary>
+		/// Get level by ID
+		/// </summary>
+		/// <param name="id"></param>
+		/// <returns></returns>
+		/// <exception cref="Exception"></exception>
+		public async Task<LevelDto> GetLevel(int id)
 		{
-			if (HasLevel(id))
-				return _levels.First(l => l.ID == id);
-			
-			var levelDto = _dal.GetDataById(id);
-			_levels.Add(levelDto);
-			return levelDto;
+			var res = await JsonSerializer.DeserializeAsync<LevelDto>(await _httpClient.GetStreamAsync($"/Levels/{id}"), _serializerOptions);
+			if (res != null)
+				return res;
+			throw new Exception("Failed to receive Levels data");
 		}
 
-		public bool HasLevel(int id)
+		/// <summary>
+		/// Get level decorations
+		/// </summary>
+		/// <param name="id"></param>
+		/// <returns></returns>
+		public async Task<List<DecorationDto>> GetLevelDecorations(int id)
 		{
-			return (_levels.Any(l => l.ID == id));	
+			return await JsonSerializer.DeserializeAsync<List<DecorationDto>>(await _httpClient.GetStreamAsync($"/Levels/{id}/Decorations"), _serializerOptions);
 		}
 
-		public void AddLevel(LevelDto levelDto)
+		/// <summary>
+		/// Post level
+		/// </summary>
+		/// <param name="level"></param>
+		/// <returns></returns>
+		/// <exception cref="Exception"></exception>
+		public async Task<LevelDto> PostLevel(LevelDto level)
 		{
-			_levels.Add(levelDto);
-		}
+			var content = new StringContent(JsonSerializer.Serialize(level), Encoding.UTF8, "application/json");
 
-		// Add reload and save
+			var res = await _httpClient.PostAsync("Levels/", content);
+			if (res.IsSuccessStatusCode)
+				return await JsonSerializer.DeserializeAsync<LevelDto>(res.Content.ReadAsStream(), _serializerOptions);
+			else
+				throw new Exception("Failed to post element");
+		}
 	}
 }

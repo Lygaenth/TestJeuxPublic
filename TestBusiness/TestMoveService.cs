@@ -2,11 +2,11 @@
 using NUnit.Framework;
 using System.Drawing;
 using TestBusiness.Mocks;
+using TestJeux.Business.Entities.LevelElements;
 using TestJeux.Business.Managers;
 using TestJeux.Business.Managers.API;
 using TestJeux.Business.Services.API;
 using TestJeux.Core.Aggregates;
-using TestJeux.Core.Entities.LevelElements;
 using TestJeux.SharedKernel.Enums;
 
 namespace TestBusiness

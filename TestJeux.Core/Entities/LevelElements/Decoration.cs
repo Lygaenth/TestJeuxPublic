@@ -6,8 +6,8 @@ namespace TestJeux.Business.Entities.LevelElements
 {
 	public class Decoration : GraphicalEntity<Decorations>
     {
-        public Decoration(int id, Decorations enumValue, Point topLeft)
-            : base(id, enumValue, topLeft)
+        public Decoration(int id, Decorations enumValue, Point topLeft, int angle)
+            : base(id, enumValue, topLeft, angle)
         {
 
         }

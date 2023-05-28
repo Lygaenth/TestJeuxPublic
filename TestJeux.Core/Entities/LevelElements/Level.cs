@@ -1,9 +1,11 @@
 ﻿using System.Collections.Generic;
-using TestJeux.Business.Entities.LevelElements;
-using TestJeux.Core.Entities.Items;
+using System.Linq;
+using TestJeux.Business.Entities.Items;
+using TestJeux.Core.Entities;
+using TestJeux.Core.Entities.LevelElements;
 using TestJeux.SharedKernel.Enums;
 
-namespace TestJeux.Core.Entities.LevelElements
+namespace TestJeux.Business.Entities.LevelElements
 {
 	public class Level : Entity
     {
@@ -25,5 +27,28 @@ namespace TestJeux.Core.Entities.LevelElements
             Decorations = new List<Decoration>();
         }
 
+        public override void Copy(Entity entity)
+        {
+            if (!(entity is Level level))
+                return;
+
+            Shader = level.Shader;
+            Music = level.Music;
+            DefaultTile = level.DefaultTile;
+
+            // Zones
+            CopyElement(Zones.Select(t => t as Entity).ToList(), level.Zones.Select(t => t as Entity).ToList());
+            CopyElement(Tiles.Select(t => t as Entity).ToList(), level.Tiles.Select(t => t as Entity).ToList());
+            CopyElement(Decorations.Select(t => t as Entity).ToList(), level.Decorations.Select(t => t as Entity).ToList());
+            // Not updating copy of items yet
+        }
+
+        private void CopyElement(List<Entity> entities, List<Entity> copiedEntities)
+        {
+            entities.RemoveAll(nt => !copiedEntities.Any(t => t.ID == nt.ID));
+            foreach (var entity in entities.Where(nz => copiedEntities.Any(t => t.ID == nz.ID)))
+                entity.Copy(copiedEntities.Find(t => t.ID == entity.ID));
+            entities.AddRange(copiedEntities.Where(nt => entities.Any(t => t.ID == nt.ID)));
+        }
     }
 }

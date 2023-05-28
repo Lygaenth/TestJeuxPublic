@@ -27,7 +27,7 @@ namespace TestJeux.Display.ViewModels.Display.Levelelements
         {
             Decorations.Clear();
             foreach (var deco in decorationsDto)
-                Decorations.Add(new DecorationViewModel() { Decoration = deco.Decoration, Sprite = GetImageBitmap(deco.Decoration.ToString()), X = deco.TopLeft.X, Y = deco.TopLeft.Y });
+                Decorations.Add(new DecorationViewModel(deco.ID) { Decoration = deco.Decoration, Sprite = GetImageBitmap(deco.Decoration.ToString()), X = deco.TopLeft.X, Y = deco.TopLeft.Y });
         }
 
         private CachedBitmap GetImageBitmap(string code)

@@ -4,7 +4,6 @@ using TestJeux.API.Models;
 using TestJeux.API.Services.LightSource;
 using TestJeux.Business.ObjectValues;
 using TestJeux.Core.Aggregates;
-using TestJeux.Core.Entities.Items;
 
 namespace TestJeux.Business.Services
 {
@@ -22,7 +21,7 @@ namespace TestJeux.Business.Services
 		private void OnItemLightStateChanged(object sender, LightState e)
 		{
 			if (ItemLightChanged != null)
-				ItemLightChanged(this, e);
+				ItemLightChanged(sender, e);
 		}
 
 		public LightState GetLightSourceState(int itemId)

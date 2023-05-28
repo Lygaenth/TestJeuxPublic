@@ -13,13 +13,13 @@ namespace TestJeux.Business.Managers
 	/// </summary>
 	public class TileService : ITileService
 	{
-		private readonly GameAggregate _game;
+		private readonly GameAggregateBase _game;
 
 		/// <summary>
 		/// Constructor
 		/// </summary>
 		/// <param name="game"></param>
-		public TileService(GameAggregate game)
+		public TileService(GameAggregateBase game)
 		{
 			_game = game;
 		}
@@ -50,7 +50,11 @@ namespace TestJeux.Business.Managers
 					var x = i * 50;
 					var y = j * 50;
 					var foundTile = GetTileForPosition(defaultTile, x, y, tiles);
-					var tile = new TileZoneDto() { Tile = foundTile.Enumvalue, TopLeft = new Point(x, y), BottomRight = new Point(x + 50, y + 50), Angle = foundTile.Angle, SpriteCodes = GetTileSprites(foundTile.Enumvalue) };
+					TileZoneDto tile = null; 
+					if (foundTile.BottomRight.X - foundTile.TopLeft.X == 50 && (foundTile.BottomRight.Y - foundTile.TopLeft.Y == 50))
+						tile = new TileZoneDto() { ID = foundTile.ID, Tile = foundTile.Enumvalue, TopLeft = new Point(x, y), BottomRight = new Point(x + 50, y + 50), Angle = foundTile.Angle, SpriteCodes = GetTileSprites(foundTile.Enumvalue) };
+					else
+						tile = new TileZoneDto() { ID = 0, Tile = foundTile.Enumvalue, TopLeft = new Point(x, y), BottomRight = new Point(x + 50, y + 50), Angle = foundTile.Angle, SpriteCodes = GetTileSprites(foundTile.Enumvalue) };
 					tilesDtos.Add(tile);
 				}
 			}

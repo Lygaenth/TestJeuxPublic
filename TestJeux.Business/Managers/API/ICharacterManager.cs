@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
 using TestJeux.API.Models;
 using TestJeux.API.Services;
-using TestJeux.Core.Entities.Items;
+using TestJeux.Business.Entities.Action;
+using TestJeux.Business.Entities.Items;
 using TestJeux.SharedKernel.Enums;
 
 namespace TestJeux.Business.Managers.API
@@ -9,6 +10,8 @@ namespace TestJeux.Business.Managers.API
 	public interface ICharacterManager : IService
     {
         ItemModel GetCharacter(int itemId);
+
+        int GetControlledItemId();
 
         ItemModel GetCharacter(int itemId, ItemCode code);
 

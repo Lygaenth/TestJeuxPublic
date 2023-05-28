@@ -12,6 +12,9 @@ namespace TestJeux.API.Models
         private Point _bottomRight;
 
         [XmlAttribute("ID")]
+        public int ID { get; set; }
+
+        [XmlAttribute("GroundType")]
         public GroundSprite Tile { get; set; }
 
         [XmlIgnore]

@@ -10,18 +10,7 @@ namespace TestJeux.API.Models
         private Point _bottomRight;
         private Point _topLeft;
 
-        public ZoneDto()
-        {
 
-        }
-
-        public ZoneDto(int id, Point bottomRight, Point topLeft, GroundType groundType)
-        {
-            ID = id;
-            BottomRight = bottomRight;
-            TopLeft = topLeft;
-            GroundType = groundType;
-        }
 
         [XmlAttribute]
         public int ID { get; set; }
@@ -44,7 +33,7 @@ namespace TestJeux.API.Models
             set
             {
                 _topLeft = value;
-                P2 = TopLeft.X + ";" + TopLeft.Y; 
+                P1 = TopLeft.X + ";" + TopLeft.Y; 
             }
         }
 
@@ -54,5 +43,18 @@ namespace TestJeux.API.Models
         public string P2 { get; set; }
         [XmlAttribute]
         public GroundType GroundType { get; set; }
-    }
+
+		public ZoneDto()
+		{
+
+		}
+
+		public ZoneDto(int id, Point bottomRight, Point topLeft, GroundType groundType)
+		{
+			ID = id;
+			BottomRight = bottomRight;
+			TopLeft = topLeft;
+			GroundType = groundType;
+		}
+	}
 }

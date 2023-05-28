@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using TestJeux.Business.Entities.Equipments;
 using TestJeux.Business.Managers.API;
 using TestJeux.Core.Aggregates;
@@ -26,7 +27,17 @@ namespace TestJeux.Business.Managers
         {
             switch(id)
             {
-                // implemtent equipments 
+                case 1:
+                    return new Swimsuit();
+                case 2:
+                    return new Torch();
+                case 3:
+                    return new PickAxe();
+                case 4:
+                    return new DoorKey();
+                case 5:
+                    return new Knife();
+                case 0:
                 default:
                     return new NoEquipment();
             }
@@ -36,12 +47,34 @@ namespace TestJeux.Business.Managers
         {
             _availableEquipments.Add(equipment);
 
+            var owner = _game.GetControlledItem();
+            if (owner.Equipments.Any(e => e.ID == equipment.ID))
+            {
+                if (!equipment.IsUnique)
+                    owner.Equipments.Find(e => e.ID == equipment.ID).Quantity++;
+            }
+            else
+            {
+                owner.Equipments.Add(equipment);
+                equipment.Quantity = 1;
+            }
+                
             if (UpdatedEquipments != null)
                 UpdatedEquipments(this, new EquipmentEventArgs(equipment.ID, ItemAction.Add));
         }
 
         public void RemoveEquipment(EquipmentCode code)
         {
+            var owner = _game.GetControlledItem();
+            if (owner.Equipments.Any(e => e.EquipmentCode == code))
+            {
+                var equipment = owner.Equipments.FirstOrDefault(e => e.EquipmentCode == code);
+                if (!equipment.IsUnique && equipment.Quantity > 1)
+                    owner.Equipments.Find(e => e.EquipmentCode == code).Quantity--;
+                else
+                    owner.Equipments.Remove(equipment);
+            }
+
             if (UpdatedEquipments != null)
                 UpdatedEquipments(this, new EquipmentEventArgs(code.GetHashCode(), ItemAction.Remove));
         }

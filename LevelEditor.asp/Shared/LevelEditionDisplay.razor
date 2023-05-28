@@ -1,0 +1,114 @@
+﻿@using TestJeux.SharedKernel.Enums;
+
+<div>
+	<div>
+		<strong>Level:</strong>
+		@if (LevelModel == null || !LevelModel.IsEdited)
+		{
+			<select @onchange="@OnLevelChanged">
+				@foreach (var level in Levels)
+				{
+					<option>@level</option>
+				}
+			</select>
+			<button @onclick="@EditCurrentLevel">Edit</button>
+			<button @onclick="@AddNewLevel" >+</button>
+		}
+		else
+		{
+			if (LevelModel.ID < 0)
+			{
+				<strong> New level</strong>
+			}
+			else
+			{
+				<strong> @LevelModel.ID</strong>
+			}
+		}
+	</div>
+	<div>
+		@if (!@IsLoading)
+		{
+			@if (!LevelModel.IsEdited)
+			{
+				<div>
+					<label><strong>Shader: </strong> @LevelModel.Shader </label>
+				</div>
+				<div>
+					<label><strong>Music</strong> @LevelModel.LevelMusic </label>
+				</div>
+				<div style="margin:5px">
+					@if (@LevelModel.SelectedSprite != null)
+					{
+						<img style="@GetRotateClass(@LevelModel.SelectedSprite.Angle); float:left; width: 20%; margin: 5px 5px" src="@LevelModel.SelectedSprite.Image" />
+						<div>
+							<strong style="margin:5px">Sprite: </strong>
+							<label>@LevelModel.SelectedSprite.GroundType</label>
+						</div>
+						<div>
+							<strong style="margin:5px">Angle: </strong>
+							<label style="margin:5px">@LevelModel.SelectedSprite.Angle</label>
+						</div>
+					}
+				</div>
+				<div>
+					<label>Display decoration layer</label>
+					<input value="@DisplayDecoration" type="checkbox" @onchange="@OnDecorationDisplayChanged" />
+				</div>
+				@if (LevelModel.IsEdited)
+				{
+					<button @onclick="@Save">Save</button>
+					<button @onclick="@Cancel">Cancel</button>
+				}
+			}
+			else
+			{
+				<div>					
+					<strong>Shader: </strong>
+					<select>
+						@foreach (var shader in Shaders.Select(s => s.Name))
+						{
+							<option>@shader</option>
+						}
+					</select>
+				</div>
+				<div>
+					<strong>Music: </strong>
+					<select>
+						@foreach (var shader in Musics.Select(m => m.Name))
+						{
+							<option>@shader</option>
+						}
+					</select>
+				</div>
+				<div style="margin:5px">
+					@if (@LevelModel.SelectedSprite != null)
+					{
+						<img style="@GetRotateClass(@LevelModel.SelectedSprite.Angle); float:left; width: 20%; margin: 5px 5px" src="@LevelModel.SelectedSprite.Image" />
+						<select value="@LevelModel.SelectedSprite.GroundType" style="margin:5px" @onchange="UpdateSelectedTileSprite">
+							@foreach (var value in Enum.GetValues(typeof(GroundSprite)))
+							{
+								<option>@value</option>
+							}
+						</select>
+						<div>
+							<strong style="margin:5px">Angle: </strong>
+							<select value="@LevelModel.SelectedSprite.Angle" style="margin:5px" @onchange="UpdateSelectedTileAngle">
+								<option>0</option>
+								<option>90</option>
+								<option>180</option>
+								<option>270</option>
+							</select>
+						</div>
+					}
+				</div>
+				<div>
+					<label>Display decoration layer</label>
+					<input value="@DisplayDecoration" type="checkbox" @onchange="@OnDecorationDisplayChanged" />
+				</div>
+				<button @onclick="@Save">Save</button>
+				<button @onclick="@Cancel">Cancel</button>
+			}
+		}
+	</div>
+</div>

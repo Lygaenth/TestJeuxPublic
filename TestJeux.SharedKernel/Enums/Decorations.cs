@@ -7,6 +7,7 @@
         CaveEntry = 3,
         Cave = 4,
         Bridge = 5,
-        Ladder = 6
+        Ladder = 6,
+        CaveUp = 7
     }
 }

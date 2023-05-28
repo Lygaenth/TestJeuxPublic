@@ -14,6 +14,7 @@ namespace TestJeux.Display.Controllers
 		private readonly Xboxcontroller _xboxcontroller;
 
 		public event MoveEventHandler MoveRaised;
+		public event NoActionEventHandler NoActionRaised;
 		public event EventHandler ActionPushed;
 		public event EventHandler NextItemPushed;
 
@@ -92,10 +93,17 @@ namespace TestJeux.Display.Controllers
 		private void Subscribe()
 		{
 			_keyBoard.MoveRaised += OnMovedRaisedKey;
+			_keyBoard.NoActionRaised += OnNoActionRaised;
 			_xboxcontroller.MoveRaised += OnMovedRaisedKey;
-
+			
 			_keyBoard.ActionPushed += OnActionPushed;
 			_xboxcontroller.ActionPushed += OnActionPushed;
+		}
+
+		private void OnNoActionRaised(object sender)
+		{
+			if (NoActionRaised != null)
+				NoActionRaised(this);
 		}
 
 		/// <summary>
@@ -104,6 +112,7 @@ namespace TestJeux.Display.Controllers
 		private void Unsubscribe()
 		{
 			_keyBoard.MoveRaised -= OnMovedRaisedKey;
+			_keyBoard.NoActionRaised -= OnNoActionRaised;
 			_xboxcontroller.MoveRaised -= OnMovedRaisedKey;
 
 			_keyBoard.ActionPushed -= OnActionPushed;

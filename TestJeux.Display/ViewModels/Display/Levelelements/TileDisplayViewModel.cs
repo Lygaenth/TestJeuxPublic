@@ -24,7 +24,7 @@ namespace TestJeux.Display.ViewModels.Display.Levelelements
         {
             Tiles.Clear();
             foreach (var tile in _tileManager.GetTiles(levelId))
-                Tiles.Add(new TileViewModel(tile.SpriteCodes.Select(s => GetImageBitmap(s)).ToList(), tile.Tile, tile.TopLeft.X, tile.TopLeft.Y, tile.Angle));
+                Tiles.Add(new TileViewModel(tile.ID, tile.SpriteCodes.Select(s => GetImageBitmap(s)).ToList(), tile.Tile, tile.TopLeft.X, tile.TopLeft.Y, tile.Angle));
         }
 
         private CachedBitmap GetImageBitmap(string code)

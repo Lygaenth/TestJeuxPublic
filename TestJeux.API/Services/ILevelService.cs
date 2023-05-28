@@ -31,7 +31,7 @@ namespace TestJeux.Business.Services.API
 
         void ChangeLevel(int id);
 
-        void SaveLevel(LevelDto levelDto);
+        void SaveLevel(int id);
 
         event LevelChange RaiseLevelChange;
     }

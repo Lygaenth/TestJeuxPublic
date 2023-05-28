@@ -14,6 +14,7 @@ namespace TestJeux.Display.Controllers
         bool _interrupt;
 
         public event MoveEventHandler MoveRaised;
+        public event NoActionEventHandler NoActionRaised;
         public event EventHandler ActionPushed;
         public event EventHandler NextItemPushed;
 
@@ -35,7 +36,8 @@ namespace TestJeux.Display.Controllers
         public void Stop()
         {
             _interrupt = true;
-        }
+			_lastInput = ControlAction.None;
+		}
 
         public bool RegisterKeyDown(ControlAction key)
         {
@@ -55,14 +57,21 @@ namespace TestJeux.Display.Controllers
         public void RegisterKeyUp(ControlAction key)
         {
             if (key == _lastInput)
+            {
                 _lastInput = ControlAction.None;
-        }
+                Task.Run(() =>
+                {
+                    if (_lastInput == ControlAction.None && NoActionRaised != null)
+                        NoActionRaised(this);
+                });
+			}
+		}
 
         protected void ScanState()
         {
             while (!_interrupt)
             {
-                Thread.Sleep(50);
+                Thread.Sleep(100);
                 Task.Run(() =>
                 {
                     if (_lastInput != ControlAction.None && MoveRaised != null)

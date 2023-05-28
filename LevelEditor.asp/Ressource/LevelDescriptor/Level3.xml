@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Level>
+	<ID>2</ID>
+	<Map>Level_3.bmp</Map>
+	<Shader>1</Shader>
+	<Music>4</Music>
+	<HasHero>True</HasHero>
+  <Ground Default="4">
+    <Sprite ID="5" P1="0;0" P2="800;50" />
+    <Sprite ID="5" P1="0;0" P2="50;800" />
+    <Sprite ID="5" P1="750;0" P2="800;800" />
+    <Sprite ID="5" P1="50;750" P2="100;800" />
+    <Sprite ID="5" P1="100;750" P2="800;800" />
+    <Sprite ID="2" P1="150;100" P2="300;700" />
+    <Sprite ID="2" P1="150;100" P2="300;700" />
+    <Sprite ID="2" P1="300;100" P2="450;350" />
+    <Sprite ID="2" P1="300;450" P2="450;700" />
+    <Sprite ID="2" P1="100;200" P2="150;300" />
+    <Sprite ID="2" P1="450;100" P2="600;700" />
+  </Ground>
+	<Zones>
+		<Zone ID="1" GroundType="4" P1="0;0" P2="800;50" />
+		<Zone ID="2" GroundType="4" P1="0;0" P2="50;800" />
+		<Zone ID="3" GroundType="4" P1="750;0" P2="800;800" />
+		<Zone ID="4" GroundType="4" P1="100;750" P2="800;800" />
+    <Zone ID="5" GroundType="2" P1="150;100" P2="300;700" />
+    <Zone ID="6" GroundType="4" P1="100;750" P2="800;800" />
+    <Zone ID="7" GroundType="2" P1="300;100" P2="450;350" />
+    <Zone ID="8" GroundType="2" P1="300;450" P2="450;700" />
+    <Zone ID="9" GroundType="2" P1="100;200" P2="150;300" />
+    <Zone ID="10" GroundType="2" P1="450;100" P2="600;700" />
+    <Zone ID="11" GroundType="5" P1="50;750" P2="100;800" />
+    <Zone ID="12" GroundType="6" P1="700;50" P2="750;100" />
+	</Zones>
+  <Decorations>
+    <Decoration ID="6" P1="700;50" />
+  </Decorations>
+	<Items>
+    	<Item ID="1" Code="1" Name="Entry" Position="700;50" Orientation="3"/>
+      <Item ID="2" Code="4" Name="Fish" Position="200;200" Orientation="3" />
+	    <Item ID="3" Code="3" Name="Fisher" Position="400;400" Orientation="2"/>
+      <Item ID="4" Code="80" Name="Door" Position="700;50" Orientation="3" State="0" />
+	</Items>
+</Level>

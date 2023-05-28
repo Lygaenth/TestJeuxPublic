@@ -11,6 +11,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="Ressource\LevelDescriptor\Export\Level1.xml" />
+    <Content Include="Ressource\LevelDescriptor\Level1.xml" />
+    <Content Include="Ressource\LevelDescriptor\Level2.xml" />
+    <Content Include="Ressource\LevelDescriptor\Level3.xml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="Shared\MapDisplay.razor" />
     <None Include="wwwroot\ressource\Sprites\Bush.png" />
     <None Include="wwwroot\ressource\Sprites\Caisse\Caisse.png" />
@@ -82,10 +89,11 @@
     <None Include="wwwroot\ressource\Sprites\Wall\BreakableWall.png" />
     <None Include="wwwroot\ressource\Sprites\Wall\BrokenWall.png" />
     <None Include="wwwroot\ressource\Sprites\Wall\BrokenWallVertical.png" />
+    <None Include="wwwroot\ressource\UI\MenuBackground.bmp" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Test.Jeux.Data\Test.Jeux.Data.csproj" />
+    <ProjectReference Include="..\Test.Jeux.Data\Test.Jeux.Data.Xml.csproj" />
     <ProjectReference Include="..\TestJeux.API\TestJeux.API.csproj" />
     <ProjectReference Include="..\TestJeux.Business\TestJeux.Business.csproj" />
   </ItemGroup>

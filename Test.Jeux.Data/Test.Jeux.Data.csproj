@@ -1,11 +1,19 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
+    <BaseOutputPath>.\..\sortie</BaseOutputPath>
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="bin\**" />
+    <EmbeddedResource Remove="bin\**" />
+    <None Remove="bin\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\TestJeux.API\TestJeux.API.csproj" />
+    <ProjectReference Include="..\TestJeux.Data.API\TestJeux.Data.API.csproj" />
   </ItemGroup>
 
 </Project>

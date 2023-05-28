@@ -2,24 +2,26 @@
 using LevelEditor.wpf.ViewModel;
 using Prism.Mvvm;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Drawing;
 using System.Linq;
 using System.Windows.Input;
-using Test.Jeux.Data;
-using TestJeux.API.Models;
+using Test.Jeux.Data.Xml;
 using TestJeux.Business.Command;
+using TestJeux.Business.Entities.Items;
 using TestJeux.Business.Managers;
 using TestJeux.Business.Managers.API;
 using TestJeux.Business.Services;
 using TestJeux.Business.Services.API;
 using TestJeux.Business.Supervisor;
 using TestJeux.Core.Aggregates;
-using TestJeux.Core.Entities.Items;
 using TestJeux.Display.Helper;
-using TestJeux.Display.ViewModels.Display.Levelelements;
 using TestJeux.SharedKernel.Enums;
+using LevelEditor.wpf.Converters;
+using TestJeux.Core.Context;
+using TestJeux.API.Services.Edition;
+using TestJeux.Business.Edition.Service;
+using TestJeux.API.Models;
+using System.Drawing;
 
 namespace LevelEditor
 {
@@ -27,13 +29,10 @@ namespace LevelEditor
     {
         private bool _showZones;
         private bool _showDecorations;
-        private readonly ILevelService _levelService;
-        private readonly ICharacterManager _characterManager;
+        private readonly ILevelEditionService _levelService;
         private readonly IImageManager _imageManager;
-        private readonly IEquipmentManager _equipmentManager;
-        private readonly ITileService _tileManager;
+        private readonly ITileService _tileService;
         private readonly DecorationManager _decorationManager;
-        private readonly ICharacterBuilder _characterBuilder;
         private LevelViewModel _selectedLevel;
         private TileViewModel _selectedTile;
         private ZoneViewModel _selectedZone;
@@ -72,7 +71,7 @@ namespace LevelEditor
                 if (SelectedTile.GroundSprite != SelectedSpriteInfo.SpriteCode)
                 {
                     SelectedTile.GroundSprite = SelectedSpriteInfo.SpriteCode;
-                    SelectedTile.UpdateSprites(ImageHelper.GetImages(_tileManager.GetTileSprites(SelectedTile.GroundSprite)));
+                    SelectedTile.UpdateSprites(ImageHelper.GetImages(_tileService.GetTileSprites(SelectedTile.GroundSprite)));
                 }
             }
         }
@@ -111,23 +110,47 @@ namespace LevelEditor
             }
         }
 
-        public ZoneViewModel SelectedZone { get => _selectedZone; set => SetProperty(ref _selectedZone, value); }
-
-        public LevelEditorViewModel()
+        public ZoneViewModel SelectedZone
         {
-            var gameRoot = new GameAggregate();
+            get => _selectedZone;
+            set
+            {
+                if (SelectedZone != null)
+                    SelectedZone.PropertyChanged -= OnZonePropertyChanged;
+
+                SetProperty(ref _selectedZone, value);
+
+                if (SelectedZone != null)
+    				SelectedZone.PropertyChanged += OnZonePropertyChanged;
+            }
+        }
+
+		private void OnZonePropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
+		{
+            var zone = sender as ZoneViewModel;
+            if (zone == null)
+                return;
+
+            if (e.PropertyName != nameof(ZoneViewModel.X) && e.PropertyName != nameof(ZoneViewModel.Y) && e.PropertyName != nameof(ZoneViewModel.GroundType))
+                return;
+
+            if ((zone.X % 50 != 0 || zone.Y % 50 != 0))
+                return;
+
+            _levelService.UpdateZone(zone.Convert());
+		}
+
+		public LevelEditorViewModel()
+        {
+            var gameRoot = new GameEditorAggregate();
 
             Levels = new ObservableCollection<LevelViewModel>();
             Characters = new ObservableCollection<ItemModel>();
             DebugZones = new ObservableCollection<ZoneViewModel>();
             _imageManager = new ImageManager();
-            _equipmentManager = new EquipmentManager(gameRoot);
-            _characterManager = new CharacterManager(gameRoot);
-            _levelService = new LevelService(gameRoot, new DALLevels());
-            _tileManager = new TileService(gameRoot);
+            _levelService = new LevelEditionService(gameRoot, new DALLevels(), new GameContext());
+            _tileService = new TileService(gameRoot);
             _decorationManager = new DecorationManager();
-
-            _characterBuilder = new CharacterBuilderEditor(_characterManager);
 
 
 			GroundTypes = new ObservableCollection<GroundType>
@@ -156,7 +179,7 @@ namespace LevelEditor
                     continue;
 
                 var groundSprite = (GroundSprite)value;
-                TilesSprites.Add(new TileSpriteInfo(groundSprite, ImageHelper.GetImages(_tileManager.GetTileSprites(groundSprite))[0]));
+                TilesSprites.Add(new TileSpriteInfo(groundSprite, ImageHelper.GetImages(_tileService.GetTileSprites(groundSprite))[0]));
             }
 
             ShowDecorations = true;
@@ -171,22 +194,15 @@ namespace LevelEditor
             var levelIds = _levelService.GetAllLevelIds();
             foreach (var id in levelIds)
             {
-                var levelVm = new LevelViewModel(_levelService, _tileManager, _characterManager, _characterBuilder);
+                var levelVm = new LevelViewModel(_levelService, _tileService);
                 levelVm.LoadLevel(id);
 				Levels.Add(levelVm);
             }
 
             if (Levels.Count == 0)
-                Levels.Add(new LevelViewModel(_levelService, _tileManager, _characterManager, _characterBuilder));
+                Levels.Add(new LevelViewModel(_levelService, _tileService));
             
             SelectedLevel = Levels[0];
-            if (SelectedLevel.Tiles.Count == 0)
-            {
-                var defaultTile = new TileViewModel(ImageHelper.GetImages(new List<string> { "Grass"}), GroundSprite.Grass, 0, 0, 0);
-                SelectedLevel.Tiles.Add(defaultTile);
-            }
-
-            SelectedTile = SelectedLevel.Tiles[0];
 
             if (DebugZones.Count > 0)
                 SelectedZone = DebugZones[0];
@@ -198,8 +214,8 @@ namespace LevelEditor
             if (dto.ID == -1)
                 return;
 
-            level = new LevelViewModel(_levelService, _tileManager, _characterManager, _characterBuilder);
-            
+            level = new LevelViewModel(_levelService, _tileService);
+            level.LoadLevel(dto.ID);
             DebugZones.Clear();
             foreach(var zone in level.Zones)
                 DebugZones.Add(zone);
@@ -217,12 +233,19 @@ namespace LevelEditor
             SelectedTile = tile;
         }
     
+        /// <summary>
+        /// Add zone
+        /// </summary>
         private void AddZone()
         {
             var zone = new ZoneViewModel(DebugZones.OrderBy(z => z.ID).Last().ID + 1, new System.Drawing.Point(0, 0), 100, 100, GroundType.Block);
             DebugZones.Add(zone);
+            _levelService.AddZone(zone.Convert());
         }
 
+        /// <summary>
+        /// Delete zone
+        /// </summary>
         private void DeleteZone()
         {
             if (SelectedZone == null)
@@ -230,56 +253,19 @@ namespace LevelEditor
 
             DebugZones.Remove(SelectedZone);
 
+            _levelService.RemoveZone(SelectedZone.ID);
+
             SelectedZone = DebugZones[0];
+
         }
 
+        /// <summary>
+        /// Save current modifications
+        /// </summary>
         private void SaveCurrentLevel()
         {
-            var dal = new DALLevels();
-            var levelDto = new LevelDto();
-            levelDto.ID = SelectedLevel.ID;
-            levelDto.LevelMusic = SelectedLevel.Music;
-            levelDto.Shader = SelectedLevel.Shader;
-            levelDto.DefaultTile = 1;
-
-            foreach(var zone in _selectedLevel.Zones)
-            {
-                var zoneDto = new ZoneDto();
-                zoneDto.BottomRight = new Point(zone.X + zone.Width, zone.Y+zone.Heigth);
-                zoneDto.TopLeft = new Point(zone.X, zone.Y);
-                zoneDto.ID = zone.ID;
-                zoneDto.GroundType = zone.GroundType;
-                levelDto.Zones.Add(zoneDto);
-            }
-
-            foreach(var tile in _selectedLevel.Tiles)
-            {
-                var tileDto = new TileZoneDto();
-                tileDto.Angle = tile.Angle;
-                tileDto.BottomRight = new Point(tile.X + 50, tile.Y + 50);
-                tileDto.TopLeft = new Point(tile.X, tile.Y);
-                tileDto.Tile = tile.GroundSprite;
-                levelDto.TilesZones.Add(tileDto);
-            }
-
-            foreach(var decoration in _selectedLevel.Decorations)
-            {
-                var decorationDto = new DecorationDto();
-                decorationDto.Decoration = decoration.Decoration;
-                decorationDto.TopLeft = new Point(decoration.X, decoration.Y);
-                levelDto.Decorations.Add(decorationDto);
-            }
-
-            foreach(var item in _selectedLevel.Items)
-            {
-                var itemDto = new ItemDto();
-                itemDto.StartPosition = item.Position;
-                itemDto.Code = item.Code;
-                // Make other view model for editor since some values can be modified that shouldn't in game
-                itemDto.DefaultState = 0;
-            }
-
-            _levelService.SaveLevel(levelDto);
+            _levelService.SaveLevel(SelectedLevel.ID);
+            ReloadLevel();
         }
     }
 }

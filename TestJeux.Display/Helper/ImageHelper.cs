@@ -24,7 +24,10 @@ namespace TestJeux.Display.Helper
                 _imageManager = new ImageManager();
                 CreateBlackImage();
             }
-    
+   
+            if (code == "Error")
+                return _errorBitmap;
+            
             if (!_images.ContainsKey(code))
                 _images[code] = CreateBitmap(Path.GetFullPath(_imageManager.GetImage(code)));
 

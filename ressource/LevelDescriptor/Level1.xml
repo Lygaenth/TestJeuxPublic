@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Level>
+	<ID>1</ID>
+	<Map>Level_1.bmp</Map>
+	<Shader>0</Shader>
+	<Music>2</Music>
+	<HasHero>True</HasHero>
+	<StartPosition>400;0</StartPosition>
+  <Ground Default="1">    
+    <Sprite ID="0" GroundType="3" P1="0;300" P2="800;350" />
+    <Sprite ID="0" GroundType="3" P1="0;350" P2="800;400" Angle="2" />
+  </Ground>
+  <Decorations>
+    <Decoration ID="0" Decoration="1" P1="450;0" />
+    <Decoration ID="0" Decoration="1" P1="450;50" />
+    <Decoration ID="0" Decoration="1" P1="450;100" />
+    <Decoration ID="0" Decoration="1" P1="450;150" />
+    <Decoration ID="0" Decoration="1" P1="450;200" />
+    <Decoration ID="0" Decoration="1" P1="450;250" />
+    <Decoration ID="0" Decoration="5" P1="425;270" />
+    <Decoration ID="0" Decoration="1" P1="450;400" />
+    <Decoration ID="0" Decoration="1" P1="450;450" />
+    <Decoration ID="0" Decoration="1" P1="450;500" />
+    <Decoration ID="0" Decoration="1" P1="450;550" />
+    <Decoration ID="0" Decoration="1" P1="450;600" />
+    <Decoration ID="0" Decoration="1" P1="450;650" />
+    <Decoration ID="0" Decoration="1" P1="450;700" />
+    <Decoration ID="0" Decoration="1" P1="450;750" />
+    <Decoration ID="0" Decoration="3" P1="700;50" />
+    <Decoration ID="0" Decoration="4" P1="645;0" />
+    <Decoration ID="0" Decoration="2" P1="600;0" />
+    <Decoration ID="0" Decoration="2" P1="600;100" />
+    <Decoration ID="0" Decoration="2" P1="600;200" />
+  </Decorations>
+	<Zones>
+		<Zone ID="0" GroundType="2" P1="0;300" P2="450;400" />
+		<Zone ID="0" GroundType="2" P1="500;300" P2="800;400" />
+		<Zone ID="0" GroundType="6" P1="700;50" P2="750;100" />
+		<Zone ID="0" GroundType="4" P1="600;0" P2="650;300" />
+		<Zone ID="0" GroundType="4" P1="650;0" P2="700;100" />
+		<Zone ID="0" GroundType="4" P1="750;0" P2="800;100" />
+		<Zone ID="0" GroundType="4" P1="700;0" P2="750;50" />
+	</Zones>
+	<Items>
+		<Item ID="0" Code="1" Position="400;0" Orientation="3" />
+		<Item ID="0" Code="90" Position="50;200" Orientation="3" />
+		<Item ID="0" Code="90" Position="300;50" Orientation="3" />
+		<Item ID="0" Code="90" Position="400;600" Orientation="3" />
+		<Item ID="0" Code="90" Position="450;600" Orientation="3" />
+		<Item ID="0" Code="2" Position="450;300" Orientation="0" />
+		<Item ID="0" Code="91" Position="750;50" Orientation="3" State="1" />
+		<Item ID="0" Code="92" Position="100;500" Orientation="3" />
+		<Item ID="0" Code="92" Position="50;550" Orientation="3" />
+		<Item ID="0" Code="92" Position="100;550" Orientation="3" />
+		<Item ID="0" Code="92" Position="50;500" Orientation="3" />
+		<Item ID="0" Code="92" Position="0;600" Orientation="3" />
+		<Item ID="0" Code="93" Position="0;750" Orientation="3" State="1" />
+		<Item ID="0" Code="92" Position="0;750" Orientation="3" />
+	</Items>
+</Level>

@@ -1,11 +1,14 @@
-﻿using TestJeux.Business.Managers;
+﻿using TestJeux.Business.Managers.API;
 using TestJeux.SharedKernel.Enums;
 
 namespace LevelEditor.asp.Models
 {
+    /// <summary>
+    /// Tile model
+    /// </summary>
 	public class TileModel
     {
-        private readonly ImageManager _imageService;
+        private readonly IImageManager _imageService;
 
         public int X { get; set; }
         public int Y { get; set; }
@@ -14,9 +17,17 @@ namespace LevelEditor.asp.Models
         public bool IsSelected { get; set; }
 
         private GroundSprite _groundType;
-        public GroundSprite GroundType { get => _groundType; set { _groundType = value; Image = _imageService.GetImage(_groundType.ToString()); } }
+        public GroundSprite GroundType
+        {
+            get => _groundType;
+            set { _groundType = value; Image = _imageService.GetImage(_groundType.ToString()); }
+        }
 
-        public TileModel(ImageManager imageService)
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="imageService"></param>
+        public TileModel(IImageManager imageService)
         {
             _imageService = imageService;
         }

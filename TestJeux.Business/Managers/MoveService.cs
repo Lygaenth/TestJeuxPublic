@@ -1,30 +1,40 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Threading;
 using TestJeux.API.Services;
 using TestJeux.Business.Entities.Action;
+using TestJeux.Business.Entities.Items;
 using TestJeux.Business.Managers.API;
 using TestJeux.Business.ObjectValues;
 using TestJeux.Business.Services.API;
 using TestJeux.Core.Aggregates;
 using TestJeux.Core.Entities;
-using TestJeux.Core.Entities.Items;
 using TestJeux.SharedKernel.Enums;
 
 namespace TestJeux.Business.Managers
 {
 	public class MoveService : IMoveService
     {
-        GameAggregate _gameRoot;
+        private readonly GameAggregate _gameRoot;
         private readonly List<ItemModel> _items;
         private readonly ILevelService _levelManager;
         private readonly IActionManager _actionManager;
         private ActionFabric _actionFabric;
+        private Dictionary<int, Movement> _queuedMovement;
+        private bool _lockQueue;
 
         public event EventHandler<MovementDto> MoveStarted;
 
+        /// <summary>
+        ///  Constructor
+        /// </summary>
+        /// <param name="gameRoot"></param>
+        /// <param name="levelManager"></param>
+        /// <param name="actionManager"></param>
         public MoveService(GameAggregate gameRoot, ILevelService levelManager, IActionManager actionManager)
         {
+            _queuedMovement = new Dictionary<int, Movement>();
             _gameRoot = gameRoot;
             _levelManager = levelManager;
             _actionManager = actionManager;
@@ -60,7 +70,8 @@ namespace TestJeux.Business.Managers
                 return;
             }
 
-            foreach (var item in _items)
+            var items = new List<ItemModel>(_items);
+            foreach (var item in items)
             {
                 if (item == itemModel)
                     continue;
@@ -105,7 +116,7 @@ namespace TestJeux.Business.Managers
 				fleeDirection = DirectionEnum.Left;
 			item.Orientation = fleeDirection;
 			var groundType = _levelManager.GetGroundType(_gameRoot.GetCurrentLevel().ID, GetTargetPosition(item.Position, fleeDirection));
-			actions.Add(_actionFabric.CreateMoveAction(item, groundType));
+			item.Move(new Movement(1, fleeDirection));
 			return actions;
 		}
 
@@ -140,6 +151,12 @@ namespace TestJeux.Business.Managers
             return !GetNotAuthorizedGroundTypes(moveType).Contains(groundType);
         }
 
+        /// <summary>
+        /// Get updated ground type
+        /// </summary>
+        /// <param name="groundType"></param>
+        /// <param name="groundModifier"></param>
+        /// <returns></returns>
         private GroundType GetUpdatedGroundType(GroundType groundType, GroundModifier groundModifier)
         {
             if (groundModifier == GroundModifier.Bridge && groundType == GroundType.Water)
@@ -147,6 +164,12 @@ namespace TestJeux.Business.Managers
             return groundType;
         }
 
+        /// <summary>
+        /// Get available position for movement
+        /// </summary>
+        /// <param name="pos"></param>
+        /// <param name="moveType"></param>
+        /// <returns></returns>
         public List<DirectionEnum> GetAvailableDirections(Point pos, MoveType moveType)
         {
             var directions = new List<DirectionEnum>();
@@ -170,6 +193,11 @@ namespace TestJeux.Business.Managers
             return directions;
         }
 
+        /// <summary>
+        /// Get forbidden ground type
+        /// </summary>
+        /// <param name="moveType"></param>
+        /// <returns></returns>
         private List<GroundType> GetNotAuthorizedGroundTypes(MoveType moveType)
         {
             var groundTypes= new List<GroundType>();
@@ -199,10 +227,20 @@ namespace TestJeux.Business.Managers
         public void MoveCharacter(DirectionEnum direction, int itemId)
         {
             var item = _items.Find(i => i.ID == itemId);
-            item.Refresh();
-            item.Orientation = direction;
-			item.Move(new Movement(1, direction));
+            if (item.IsMoving)
+                return;
+
+            MoveItem(item, direction);
         }
+
+        private void MoveItem(ItemModel item, DirectionEnum direction)
+        {
+			item.ChangeState(_levelManager.GetGroundType(_gameRoot.GetCurrentLevel().ID, GetTargetPosition(item.Position, direction)));
+			item.IsMoving = true;
+			item.Refresh();
+			item.Orientation = direction;
+			item.Move(new Movement(1, direction));
+		}
 
         /// <summary>
         /// Check if any item occupy the target position
@@ -272,17 +310,37 @@ namespace TestJeux.Business.Managers
             _items.Clear();
         }
 
+        /// <summary>
+        /// Check action on end of move
+        /// </summary>
+        /// <param name="itemId"></param>
 		public void NotifyEndOfMove(int itemId)
 		{
             var item = _gameRoot.GetItemFromCurrentLevel(itemId);
-			item.IsMoving = false;
+
+            _lockQueue = true;
+            Movement queuedMove = null; 
+            if (HasQueuedMove(itemId))
+                queuedMove = _queuedMovement[itemId];
+            _lockQueue = false;
+
+            if (!(queuedMove == null))
+            {
+                if (CanMove(item.GetMoveType(), GetTargetPosition(item.Position, queuedMove.Direction)))
+                {
+					MoveItem(item, queuedMove.Direction);
+                    ClearQueudMove(itemId);
+					return;
+				}
+            }
+
+			item.IsMoving = false;			
 			item.Refresh();
 			NotifyMove(item);
 		}
 
 		public void Subscribe()
 		{
-            System.Diagnostics.Debug.WriteLine("Subscribe once");
 			foreach (var item in _gameRoot.GetItems())
 				item.Moved += OnItemMoved;
 		}
@@ -298,12 +356,30 @@ namespace TestJeux.Business.Managers
 
 		private void OnItemMoved(object sender, Movement e)
 		{
-			System.Diagnostics.Debug.WriteLine("Item moved raised");
 			if (sender == null || !Int32.TryParse(sender.ToString(), out var itemId))
                 return;
 
 			if (MoveStarted != null)
 				MoveStarted(itemId, new MovementDto() { UnitNumber = ConstantesDisplay.UnitSize, Direction = e.Direction });
 		}
+
+		public void QueueMove(DirectionEnum direction, int id)
+		{
+            if(_queuedMovement != null)
+    			_queuedMovement[id] = new Movement(ConstantesDisplay.UnitSize, direction);
+		}
+
+        public bool HasQueuedMove(int id)
+        {
+            return _queuedMovement.ContainsKey(id);
+        }
+
+        public void ClearQueudMove(int id)
+        {
+            if (_lockQueue)
+                do { Thread.Sleep(1); } while (_lockQueue);
+
+            _queuedMovement.Remove(id);
+        }
 	}
 }

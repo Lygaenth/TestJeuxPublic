@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Level>
+	<ID>2</ID>
+	<Map>Level_2.bmp</Map>
+	<Shader>2</Shader>
+	<Music>2</Music>
+	<HasHero>True</HasHero>
+  <Ground Default="4">
+    <Sprite ID="5" P1="0;0" P2="800;50" />
+    <Sprite ID="5" P1="0;0" P2="50;800" />
+    <Sprite ID="5" P1="750;0" P2="800;800" />
+    <Sprite ID="5" P1="100;750" P2="800;800" />
+    <Sprite ID="5" P1="650;50" P2="700;400" />
+    <Sprite ID="5" P1="650;450" P2="750;550" />
+    <Sprite ID="5" P1="100;100" P2="550;150" />
+    <Sprite ID="5" P1="50;200" P2="250;250" />
+    <Sprite ID="5" P1="100;300" P2="200;400" />
+    <Sprite ID="5" P1="200;300" P2="250;650" />
+    <Sprite ID="5" P1="50;450" P2="200;550" />
+    <Sprite ID="5" P1="250;500" P2="300;550" />
+    <Sprite ID="5" P1="100;600" P2="150;800" />
+    <Sprite ID="5" P1="150;700" P2="250;750" />
+    <Sprite ID="5" P1="300;150" P2="350;450" />
+    <Sprite ID="5" P1="350;400" P2="400;600" />
+    <Sprite ID="5" P1="400;400" P2="450;550" />
+    <Sprite ID="5" P1="500;450" P2="550;550" />
+    <Sprite ID="5" P1="550;450" P2="600;650" />
+    <Sprite ID="5" P1="600;600" P2="700;650" />
+    <Sprite ID="5" P1="500;700" P2="750;750" />
+    <Sprite ID="5" P1="300;600" P2="350;650" />
+    <Sprite ID="5" P1="300;650" P2="400;700" />
+    <Sprite ID="5" P1="450;600" P2="500;700" />
+    <Sprite ID="5" P1="400;200" P2="550;250" />
+    <Sprite ID="5" P1="400;250" P2="450;300" />
+    <Sprite ID="5" P1="400;300" P2="600;350" />
+    <Sprite ID="5" P1="550;350" P2="650;400" />
+    <Sprite ID="5" P1="700;50" P2="750;100" />
+    <Sprite ID="5" P1="50;750" P2="100;800" />
+  </Ground>
+	<Zones>
+		<Zone ID="1" GroundType="4" P1="0;0" P2="800;50" />
+		<Zone ID="2" GroundType="4" P1="0;0" P2="50;800" />
+		<Zone ID="3" GroundType="4" P1="750;0" P2="800;800" />
+		<Zone ID="4" GroundType="4" P1="100;750" P2="800;800" />
+		<Zone ID="5" GroundType="4" P1="650;50" P2="700;400" />
+		<Zone ID="6" GroundType="4" P1="650;450" P2="750;550" />
+		<Zone ID="7" GroundType="4" P1="100;100" P2="550;150" />
+		<Zone ID="8" GroundType="4" P1="50;200" P2="250;250" />
+		<Zone ID="9" GroundType="4" P1="100;300" P2="200;400" />
+		<Zone ID="10" GroundType="4" P1="200;300" P2="250;650" />
+		<Zone ID="11" GroundType="4" P1="50;450" P2="200;550" />
+		<Zone ID="12" GroundType="4" P1="250;500" P2="300;550" />
+		<Zone ID="13" GroundType="4" P1="100;600" P2="150;800" />
+		<Zone ID="14" GroundType="4" P1="150;700" P2="250;750" />
+		<Zone ID="15" GroundType="4" P1="300;150" P2="350;450" />
+		<Zone ID="16" GroundType="4" P1="350;400" P2="400;600" />
+		<Zone ID="17" GroundType="4" P1="400;400" P2="450;550" />
+		<Zone ID="18" GroundType="4" P1="500;450" P2="550;550" />
+		<Zone ID="19" GroundType="4" P1="550;450" P2="600;650" />
+		<Zone ID="20" GroundType="4" P1="600;600" P2="700;650" />
+		<Zone ID="21" GroundType="4" P1="500;700" P2="750;750" />
+		<Zone ID="22" GroundType="4" P1="300;600" P2="350;650" />
+		<Zone ID="23" GroundType="4" P1="300;650" P2="400;700" />
+		<Zone ID="24" GroundType="4" P1="450;600" P2="500;700" />
+		<Zone ID="25" GroundType="4" P1="400;200" P2="550;250" />
+		<Zone ID="26" GroundType="4" P1="400;250" P2="450;300" />
+		<Zone ID="27" GroundType="4" P1="400;300" P2="600;350" />
+		<Zone ID="28" GroundType="4" P1="550;350" P2="650;400" />
+		<Zone ID="29" GroundType="5" P1="700;50" P2="750;100" />
+		<Zone ID="30" GroundType="6" P1="50;750" P2="100;800" />
+	</Zones>
+  <Decorations>
+  </Decorations>
+  <Items>
+		<Item ID="1" Code="1" Name="Entry" Position="700;50" Orientation="3"/>
+		<Item ID="2" Code="91" Name="LitTorch" Position="750;50" Orientation="3" State="1" />
+		<Item ID="3" Code="91" Name="TorchOff" Position="650;350" Orientation="3" State="0" />
+    <Item ID="4" Code="91" Name="TorchOff" Position="300;300" Orientation="3" State="0" />
+    <Item ID="5" Code="91" Name="TorchOff" Position="500;100" Orientation="3" State="0" />
+    <Item ID="6" Code="91" Name="TorchOff" Position="300;400" Orientation="3" State="0" />
+    <Item ID="7" Code="91" Name="TorchOff" Position="250;500" Orientation="3" State="0" />
+    <Item ID="8" Code="91" Name="TorchOff" Position="350;650" Orientation="3" State="0" />
+    <Item ID="9" Code="91" Name="TorchOff" Position="200;200" Orientation="3" State="0" />
+    <Item ID="10" Code="91" Name="TorchOff" Position="550;300" Orientation="3" State="0" />
+    <Item ID="15" Code="50" Name="FakeLightEntry" Position="700;50" Orientation="3" State="0" />
+    <Item ID="16" Code="50" Name="FakeLightExit" Position="50;750" Orientation="3" State="0" />
+    <Item ID="17" Code="93" Name="PickAxeChest" Position="450;700" Orientation="3" State="3" />
+    <Item ID="18" Code="94" Name="BreakableWall" Position="500;250" Orientation="3" State="0" />
+    <Item ID="19" Code="93" Name="KeyChest" Position="450;250" Orientation="3" State="4" />
+    <Item ID="20" Code="80" Name="Door" Position="50;600" Orientation="3" State="0" />
+    <Item ID="21" Code="95" Name="BreakableWall" Position="400;650" Orientation="3" State="0" />
+	</Items>
+</Level>

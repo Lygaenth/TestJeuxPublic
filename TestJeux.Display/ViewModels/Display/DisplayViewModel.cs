@@ -1,8 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Windows;
+using TestJeux.Business.Entities.LevelElements;
 using TestJeux.Display.ViewModels.Base;
 using TestJeux.Display.ViewModels.Display.ChatBox;
 using TestJeux.Display.ViewModels.Display.Levelelements;
@@ -84,6 +87,26 @@ namespace TestJeux.Display.ViewModels.Display
 
         public ObservableCollection<ZoneViewModel> DebugZones { get; set; }
 
+        private int _fps;
+        public int FPS
+        {
+            get => _fps;
+            set
+            {
+                SetProperty(ref _fps, value);
+            }
+        }
+
+        private int _refreshTime;
+        public int RefreshTime
+        {
+            get => _refreshTime;
+			set
+			{
+				SetProperty(ref _refreshTime, value);
+			}
+		}
+
         #endregion
 
         public DisplayViewModel(DisplayTextViewModel displayTextVm, LevelViewModel levelVm, ShaderViewModel shaderVm)
@@ -105,13 +128,20 @@ namespace TestJeux.Display.ViewModels.Display
             _isInterrupted = false;
             if (_refreshThread.IsAlive)
                 return;
-            _refreshThread = new Thread(() => RefreshThread());
+
+            foreach (var item in LevelVm.Items)
+                item.Subscribe();
+
+			_refreshThread = new Thread(() => RefreshThread());
             _refreshThread.Start();
         }
 
         public void Stop()
         {
-            _isInterrupted = true;
+			foreach (var item in LevelVm.Items)
+				item.Unsubscribe();
+
+			_isInterrupted = true;
         }
 
         public void DisplayView(ViewEnum view)
@@ -133,9 +163,15 @@ namespace TestJeux.Display.ViewModels.Display
         {
             Application.Current.Dispatcher.Invoke(() =>
             {
-                Characters.Clear();
+				foreach (var character in Characters)
+					character.Unsubscribe();
+
+				Characters.Clear();
                 foreach (var charac in characters)
+                {
                     Characters.Add(charac);
+                    charac.Subscribe();
+                }
             });
         }
         #endregion
@@ -143,13 +179,17 @@ namespace TestJeux.Display.ViewModels.Display
         #region privae methods
         private void RefreshThread()
         {
+            DateTime _fpsCountStartTi = DateTime.Now;
+            int fpscount = 0;
             while (!_isInterrupted)
             {
+                var startTime = DateTime.Now;
                 var characs = LevelVm.Items.OrderBy(c => c.Priority).ToList();
                 ExecuteUithread(() =>
                 {
                     foreach (var tile in LevelVm.Tiles)
-                        tile.Refresh();
+                        if (tile.CanRefresh())
+                            tile.Refresh();
 
 					LevelVm.Items.Clear();
                     foreach (var item in characs)
@@ -159,12 +199,17 @@ namespace TestJeux.Display.ViewModels.Display
                     }
                     DisplayText.Refresh();
 
-                    //if (Shader.Sources.Count != Characters.Select(c => c.IsLightSource).Count())
-                    //    Shader = new ShaderViewModel(Shader.ShaderType, Characters.ToList());
-
+                    RefreshTime = (DateTime.Now - startTime).Milliseconds;
                 });
 
-                Thread.Sleep(50);
+                Thread.Sleep(Math.Max(10, 50 - RefreshTime));
+                fpscount++;
+                if ((DateTime.Now - _fpsCountStartTi).TotalMilliseconds > 1000)
+                {
+                    ExecuteUithread(() => FPS = fpscount);
+                    _fpsCountStartTi = DateTime.Now;
+                    fpscount = 0;
+                }
             }
         }
         #endregion

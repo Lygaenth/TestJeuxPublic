@@ -55,7 +55,7 @@ namespace TestJeux.Display.ViewModels.Display.Levelelements
             foreach (var tile in _tileManager.GetTiles(level.ID))
             {
                 tile.SpriteCodes = _tileManager.GetTileSprites(tile.Tile);
-                Tiles.Add(new TileViewModel(tile.SpriteCodes.Select(s => GetImageBitmap(s)).ToList(), tile.Tile, tile.TopLeft.X, tile.TopLeft.Y, tile.Angle));
+                Tiles.Add(new TileViewModel(tile.ID, tile.SpriteCodes.Select(s => GetImageBitmap(s)).ToList(), tile.Tile, tile.TopLeft.X, tile.TopLeft.Y, tile.Angle));
             }
 
             Zones.Clear();
@@ -64,18 +64,20 @@ namespace TestJeux.Display.ViewModels.Display.Levelelements
 
             Decorations.Clear();
             foreach (var decoration in level.Decorations)
-                Decorations.Add(new DecorationViewModel() { Decoration = decoration.Decoration, Sprite = GetImageBitmap(decoration.Decoration.ToString()), X = decoration.TopLeft.X, Y = decoration.TopLeft.Y });
+                Decorations.Add(new DecorationViewModel(decoration.ID) { Decoration = decoration.Decoration, Sprite = GetImageBitmap(decoration.Decoration.ToString()), X = decoration.TopLeft.X, Y = decoration.TopLeft.Y, Angle = decoration.Angle });
 
             SelectedItem = null;
             Items.Clear();
 
             foreach (var itemId in level.ItemsIDs)
             {
-                var itemVm = _characterBuilder.CreateItem(_characterManager.GetCharacter(itemId));
+                var itemVm =  _characterBuilder.CreateItem(_characterManager.GetCharacter(itemId));
+                
                 itemVm.RefreshSprite();
                 Items.Add(itemVm);
-                if (itemVm.IsSelected)
-                    SelectedItem = itemVm;
+
+                int controlledItemId = _characterManager.GetControlledItemId();
+                SelectedItem = Items.FirstOrDefault(i => i.ID == controlledItemId);
             }
         }
 
@@ -89,8 +91,10 @@ namespace TestJeux.Display.ViewModels.Display.Levelelements
 
         public void RemoveItem(int id)
         {
-            foreach (var item in Items.Where(i => i.ID == id))
-                Items.Remove(item);
+            ExecuteUithread(() =>
+            {
+                Items.Remove(Items.FirstOrDefault(i => i.ID == id));
+            });
         }
         private CachedBitmap GetImageBitmap(string code)
         {

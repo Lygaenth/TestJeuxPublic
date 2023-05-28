@@ -1,6 +1,7 @@
-﻿using TestJeux.Business.Managers.API;
+﻿using TestJeux.API.Models;
+using TestJeux.Business.Entities.Items;
+using TestJeux.Business.Managers.API;
 using TestJeux.Business.Supervisor;
-using TestJeux.Core.Entities.Items;
 using TestJeux.Display.ViewModels.Display;
 
 namespace LevelEditor.wpf.Builders

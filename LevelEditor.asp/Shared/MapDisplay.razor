@@ -2,76 +2,30 @@
 @using LevelEditor.asp;
 @using TestJeux.Business.Managers;
 
-@inject ImageManager _imageService;
-
 <div style="position: relative; display: flex;">
 	<table class="compact">		
-		@for (int i = 0; i < 16; i++)
+		@for (int i = 0; i < LevelModel.Tiles.Length; i++)
 		{
 			<tr>
-			@for (int j = 0; j < 16; j++)
+			@for (int j = 0; j < LevelModel.Tiles.Length; j++)
 			{
 				var row = j;
 				var col = i;
-				if (Tiles!= null)
+				if (LevelModel.Tiles != null)
 				{
-					<td class="@GetCellClass(Tiles[j][i])">
-						<img style="@GetRotateClass(@Tiles[j][i].Angle)" src="@Tiles[j][i].Image" @onclick="@(e => Select(@Tiles[row][col]))"/>
-					</td>
+					if (LevelModel.Tiles[j] != null)
+					{
+						<td class="@GetCellClass(LevelModel.Tiles[j][i])">
+							<img style="@GetRotateClass(@LevelModel.Tiles[j][i].Angle)" src="@LevelModel.Tiles[j][i].Image" @onclick="@(e => Select(@LevelModel.Tiles[row][col]))"/>
+						</td>
+					}
 				}
 			}
 			</tr>
 		}		
 	</table>
-	@foreach(var decoration in Decorations)
+	@foreach(var decoration in LevelModel.Decorations)
 	{
-		<img style="@GetImgPosition(decoration.X, decoration.Y)" src="@decoration.Image" />
+		<img style="@GetImgPosition(decoration.X + (decoration.X /50) + 1, decoration.Y + (decoration.Y /50) + 1)" src="@decoration.Image" />
 	}
 </div>
-
-@code {
-
-	[Parameter]
-	public TileModel[][]? Tiles { get; set; }
-
-	[Parameter]
-	public EventCallback<TileModel> OnSelectedTile { get; set; }
-
-	[Parameter]
-	public TileModel? SelectedTile { get; set; }
-
-	[Parameter]
-	public List<DecorationModel> Decorations { get; set; }
-
-
-	public MapDisplay()
-	{
-		Decorations = new List<DecorationModel>();
-	}
-
-	private string GetCellClass(TileModel tile)
-	{
-		return tile.IsSelected ? "selectedTd" : "compact";
-	}
-
-	private string GetRotateClass(int angle)
-	{
-		return "transform: rotate(" + angle + "deg)";
-	}
-
-	private string GetImgPosition(int X, int Y)
-	{
-		var style= "position: absolute; top: "+Y+"px; left: "+X+"px;";
-		return style;
-	}
-
-	private async Task Select(TileModel tile)
-	{
-		if (SelectedTile != null)
-			SelectedTile.IsSelected = false;
-
-		SelectedTile = tile;
-		SelectedTile.IsSelected = true;
-		await OnSelectedTile.InvokeAsync(tile);
-	}
-}

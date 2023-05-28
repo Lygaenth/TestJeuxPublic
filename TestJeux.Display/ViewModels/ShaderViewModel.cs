@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using TestJeux.API.Models;
 using TestJeux.API.Services.LightSource;
 using TestJeux.Business.ObjectValues;
 using TestJeux.Display.ViewModels.Display;
@@ -43,6 +42,14 @@ namespace TestJeux.Display.ViewModels
             }
         }
 
+		private void OnSourcePropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+		{
+			if (e.PropertyName == nameof(LightSourceViewModel.IsLit))
+			{
+				RaisePropertyChanged(nameof(Sources));
+			}
+		}
+
 		public void Update(ShaderType shaderType, List<ItemViewModel> items)
         {
             _items.Clear();
@@ -68,10 +75,19 @@ namespace TestJeux.Display.ViewModels
                 var source = new LightSourceViewModel(item.ID, lightDto.IsLit, lightDto.Intensity, item.Center);
                 Sources.Add(source);
                 item.PropertyChanged += OnItemPropertyChanged;
+                source.PropertyChanged += OnItemPropertyChanged;
             }
 
 			_lightSourceService.ItemLightChanged += OnItemLightChanged;
 		}
+
+        public void Unload()
+        {
+            foreach(var item in _items)
+				item.PropertyChanged -= OnItemPropertyChanged;
+
+			_lightSourceService.ItemLightChanged -= OnItemLightChanged;
+        }
 
 		private void OnItemLightChanged(object? sender, LightState e)
 		{
@@ -81,9 +97,14 @@ namespace TestJeux.Display.ViewModels
             if (!Int32.TryParse(sender.ToString(), out int itemId))
                 return;
 
+            if (!Sources.Any(s => s.ID == itemId))
+                return;
+
             var source = Sources.First(s => s.ID == itemId);
             source.IsLit = e.IsLit;
             source.LightIntensity = e.Intensity;
+
+			RaisePropertyChanged(nameof(Sources));
 		}
 	}
 }

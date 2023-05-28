@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TestJeux.API\TestJeux.API.csproj" />
+    <ProjectReference Include="..\TestJeux.Business\TestJeux.Business.csproj" />
+    <ProjectReference Include="..\TestJeux.Data.EFCore\TestJeux.Data.EFCore.csproj" />
+  </ItemGroup>
+
+</Project>

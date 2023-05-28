@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Threading;
+using TestJeux.Business.Entities.Items;
 using TestJeux.Business.Managers.API;
 using TestJeux.Core.Aggregates;
-using TestJeux.Core.Entities.Items;
 
 namespace TestJeux.Business.Services
 {

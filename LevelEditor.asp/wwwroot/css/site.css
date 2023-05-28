@@ -41,6 +41,7 @@ a, .btn-link {
 .compact {
     margin: 0;
     padding: 0;
+    border-width:1px;
     border-collapse: collapse;
 }
 

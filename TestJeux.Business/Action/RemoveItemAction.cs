@@ -1,5 +1,5 @@
-﻿using TestJeux.Core.Entities;
-using TestJeux.Core.Entities.Items;
+﻿using TestJeux.Business.Entities.Items;
+using TestJeux.Core.Entities;
 
 namespace TestJeux.Business.Action
 {

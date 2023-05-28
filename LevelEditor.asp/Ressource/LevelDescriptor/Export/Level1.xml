@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Level xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" d1p1:DefaultTile="1" xmlns:d1p1="Ground" xmlns="http://www.cpandl.com">
+  <ID>1</ID>
+  <Shader>0</Shader>
+  <LevelMusic>2</LevelMusic>
+  <Zones>
+    <Zone ID="1" P2="0;300" GroundType="2" />
+    <Zone ID="2" P2="500;300" GroundType="2" />
+    <Zone ID="3" P2="700;50" GroundType="6" />
+    <Zone ID="4" P2="600;0" GroundType="4" />
+    <Zone ID="5" P2="650;0" GroundType="4" />
+    <Zone ID="6" P2="750;0" GroundType="4" />
+    <Zone ID="7" P2="700;0" GroundType="4" />
+  </Zones>
+  <Items />
+  <Ground>
+    <Sprite ID="1" Angle="0" P1="0;0" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="0;50" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="0;100" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="0;150" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="0;200" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="0;250" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="0;300" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="0;350" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="0;400" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="0;450" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="0;500" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="0;550" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="0;600" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="0;650" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="0;700" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="0;750" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="50;0" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="50;50" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="50;100" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="50;150" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="50;200" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="50;250" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="50;300" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="50;350" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="50;400" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="50;450" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="50;500" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="50;550" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="50;600" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="50;650" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="50;700" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="50;750" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="100;0" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="100;50" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="100;100" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="100;150" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="100;200" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="100;250" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="100;300" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="100;350" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="100;400" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="100;450" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="100;500" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="100;550" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="100;600" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="100;650" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="100;700" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="100;750" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="150;0" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="150;50" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="150;100" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="150;150" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="150;200" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="150;250" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="150;300" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="150;350" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="150;400" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="150;450" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="150;500" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="150;550" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="150;600" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="150;650" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="150;700" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="150;750" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="200;0" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="200;50" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="200;100" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="200;150" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="200;200" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="200;250" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="200;300" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="200;350" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="200;400" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="200;450" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="200;500" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="200;550" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="200;600" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="200;650" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="200;700" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="200;750" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="250;0" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="250;50" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="250;100" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="250;150" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="250;200" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="250;250" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="250;300" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="250;350" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="250;400" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="250;450" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="250;500" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="250;550" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="250;600" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="250;650" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="250;700" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="250;750" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="300;0" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="300;50" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="300;100" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="300;150" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="300;200" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="300;250" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="300;300" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="300;350" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="300;400" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="300;450" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="300;500" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="300;550" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="300;600" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="300;650" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="300;700" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="300;750" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="350;0" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="350;50" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="350;100" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="350;150" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="350;200" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="350;250" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="350;300" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="350;350" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="350;400" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="350;450" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="350;500" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="350;550" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="350;600" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="350;650" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="350;700" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="350;750" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="400;0" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="400;50" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="400;100" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="400;150" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="400;200" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="400;250" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="400;300" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="400;350" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="400;400" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="400;450" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="400;500" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="400;550" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="400;600" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="400;650" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="400;700" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="400;750" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="450;0" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="450;50" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="450;100" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="450;150" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="450;200" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="450;250" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="450;300" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="450;350" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="450;400" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="450;450" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="450;500" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="450;550" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="450;600" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="450;650" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="450;700" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="450;750" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="500;0" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="500;50" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="500;100" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="500;150" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="500;200" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="500;250" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="500;300" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="500;350" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="500;400" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="500;450" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="500;500" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="500;550" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="500;600" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="500;650" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="500;700" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="500;750" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="550;0" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="550;50" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="550;100" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="550;150" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="550;200" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="550;250" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="550;300" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="550;350" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="550;400" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="550;450" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="550;500" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="550;550" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="550;600" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="550;650" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="550;700" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="550;750" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="600;0" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="600;50" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="600;100" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="600;150" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="600;200" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="600;250" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="600;300" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="600;350" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="600;400" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="600;450" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="600;500" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="600;550" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="600;600" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="600;650" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="600;700" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="600;750" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="650;0" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="650;50" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="650;100" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="650;150" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="650;200" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="650;250" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="650;300" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="650;350" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="650;400" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="650;450" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="650;500" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="650;550" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="650;600" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="650;650" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="650;700" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="650;750" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="700;0" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="700;50" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="700;100" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="700;150" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="700;200" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="700;250" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="700;300" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="700;350" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="700;400" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="700;450" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="700;500" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="700;550" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="700;600" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="700;650" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="700;700" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="700;750" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="750;0" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="750;50" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="750;100" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="750;150" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="750;200" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="750;250" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="750;300" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="750;350" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="750;400" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="750;450" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="750;500" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="750;550" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="750;600" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="750;650" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="750;700" P2="0;0" />
+    <Sprite ID="1" Angle="0" P1="750;750" P2="0;0" />
+  </Ground>
+  <Decorations>
+    <Decoration ID="DustPath" P1="450;0" />
+    <Decoration ID="DustPath" P1="450;50" />
+    <Decoration ID="DustPath" P1="450;100" />
+    <Decoration ID="DustPath" P1="450;150" />
+    <Decoration ID="DustPath" P1="450;200" />
+    <Decoration ID="DustPath" P1="450;250" />
+    <Decoration ID="Bridge" P1="425;270" />
+    <Decoration ID="DustPath" P1="450;400" />
+    <Decoration ID="DustPath" P1="450;450" />
+    <Decoration ID="DustPath" P1="450;500" />
+    <Decoration ID="DustPath" P1="450;550" />
+    <Decoration ID="DustPath" P1="450;600" />
+    <Decoration ID="DustPath" P1="450;650" />
+    <Decoration ID="DustPath" P1="450;700" />
+    <Decoration ID="DustPath" P1="450;750" />
+    <Decoration ID="CaveEntry" P1="700;50" />
+    <Decoration ID="Cave" P1="645;0" />
+    <Decoration ID="PineTree" P1="600;0" />
+    <Decoration ID="PineTree" P1="600;100" />
+    <Decoration ID="PineTree" P1="600;200" />
+  </Decorations>
+</Level>

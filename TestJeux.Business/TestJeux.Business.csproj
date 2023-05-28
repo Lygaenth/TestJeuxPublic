@@ -1,11 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Test.Jeux.Data\Test.Jeux.Data.csproj" />
+    <ProjectReference Include="..\Test.Jeux.Data\Test.Jeux.Data.Xml.csproj" />
     <ProjectReference Include="..\TestJeux.API\TestJeux.API.csproj" />
     <ProjectReference Include="..\TestJeux.Core\TestJeux.Core.csproj" />
     <ProjectReference Include="..\TestJeux.SharedKernel\TestJeux.SharedKernel.csproj" />
